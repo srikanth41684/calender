@@ -1,29 +1,42 @@
-import {View, Text, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Modal,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import moment from 'moment/moment';
 
 const HomeScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [commObj, setCommObj] = useState({
     date: null,
+    months: moment.months(),
+    selectedMonth: null,
+    selectedYear: null,
+    dataInfo: [
+      {
+        id: 1,
+        titile: 'Today date',
+      },
+    ],
   });
 
   useEffect(() => {
     const currentDate = new Date();
-    const formattedDate = formatDateToYYYYMMDD(currentDate);
-    console.log(formattedDate);
+    const formattedDate = moment(currentDate).format('YYYY-MM-DD');
+    let month = moment(currentDate).format('MMMM');
+    let year = moment(currentDate).format('YYYY');
     setCommObj(prev => ({
       ...prev,
       date: formattedDate,
+      selectedMonth: month,
+      selectedYear: year,
     }));
   }, []);
-
-  function formatDateToYYYYMMDD(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
 
   useEffect(() => {
     console.log('Home commObj------->', commObj);
@@ -44,13 +57,14 @@ const HomeScreen = () => {
           }}>
           <Calendar
             onDayPress={day => {
-              console.log('selected dated-------->', day.day.toString().length);
+              console.log('selected dated-------->', day);
               let date = `${day.year}-${
                 day.month.toString().length === 1 ? '0' + day.month : day.month
               }-${day.day.toString().length === 1 ? '0' + day.day : day.day}`;
               setCommObj(prev => ({
                 ...prev,
                 date: date,
+                data: day,
               }));
             }}
             markedDates={{
@@ -81,17 +95,18 @@ const HomeScreen = () => {
               )
             }
             enableSwipeMonths={true}
+            onMonthChange={month => console.log('month----->', month)}
             renderHeader={date => {
-              let newDate = new Date(date);
-              let month = newDate.toLocaleString('en-US', {month: 'long'});
-              let year = date.getFullYear();
               return (
                 <View
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
-                  <TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      setModalVisible(true);
+                    }}>
                     <View
                       style={{
                         padding: 5,
@@ -103,7 +118,7 @@ const HomeScreen = () => {
                           lineHeight: 23,
                           fontWeight: 'bold',
                         }}>
-                        {month}
+                        {commObj.selectedMonth}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -119,16 +134,102 @@ const HomeScreen = () => {
                           lineHeight: 23,
                           fontWeight: 'bold',
                         }}>
-                        {year}
+                        {commObj.selectedYear}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
               );
-              console.log('date---->', date);
             }}
           />
         </View>
+        {commObj.dataInfo &&
+          commObj.dataInfo.map((item, index) => {
+            return (
+              <View key={index} style={{}}>
+                <Text style={{}}>{item.titile}</Text>
+                <Text style={{}}>{commObj.date}</Text>
+              </View>
+            );
+          })}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(false);
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 20,
+                backgroundColor: 'rgba(0,0,0,0.7)',
+              }}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setModalVisible(true);
+                }}>
+                <View
+                  style={{
+                    paddingVertical: 25,
+                    paddingHorizontal: 10,
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                  }}>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      paddingBottom: 30,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        lineHeight: 25,
+                        color: '#000',
+                      }}>
+                      {moment(commObj.date).format('YYYY')}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                    }}>
+                    {commObj.months.map((item, index) => {
+                      return (
+                        <TouchableWithoutFeedback key={index}>
+                          <View
+                            style={{
+                              width: '22%',
+                              alignItems: 'center',
+                              paddingVertical: 10,
+                              backgroundColor: 'lightblue',
+                              borderRadius: 4,
+                            }}>
+                            <Text
+                              style={{
+                                color: '#000',
+                                fontSize: 14,
+                              }}>
+                              {item}
+                            </Text>
+                          </View>
+                        </TouchableWithoutFeedback>
+                      );
+                    })}
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     </SafeAreaView>
   );
