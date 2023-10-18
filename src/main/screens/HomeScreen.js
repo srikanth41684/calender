@@ -185,7 +185,9 @@ const HomeScreen = () => {
                   <View
                     style={{
                       alignItems: 'center',
-                      paddingBottom: 30,
+                      paddingBottom: 15,
+                      borderBottomWidth: 1,
+                      borderBottomColor: 'lightgray'
                     }}>
                     <Text
                       style={{
@@ -201,16 +203,28 @@ const HomeScreen = () => {
                       flexDirection: 'row',
                       flexWrap: 'wrap',
                       justifyContent: 'space-between',
+                      rowGap: 20,
+                      paddingTop: 15,
                     }}>
                     {commObj.months.map((item, index) => {
                       return (
-                        <TouchableWithoutFeedback key={index}>
+                        <TouchableWithoutFeedback
+                          key={index}
+                          onPress={() => {
+                            setCommObj(prev => ({
+                              ...prev,
+                              selectedMonth: item,
+                            }));
+                          }}>
                           <View
                             style={{
                               width: '22%',
                               alignItems: 'center',
                               paddingVertical: 10,
-                              backgroundColor: 'lightblue',
+                              backgroundColor:
+                                commObj.selectedMonth === item
+                                  ? 'lightblue'
+                                  : '#fff',
                               borderRadius: 4,
                             }}>
                             <Text
