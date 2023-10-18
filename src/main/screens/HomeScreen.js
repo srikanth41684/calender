@@ -122,7 +122,7 @@ const HomeScreen = () => {
                   .format('MMMM'),
               }));
             }}
-            renderHeader={date => {
+            renderHeader={() => {
               return (
                 <View
                   style={{
