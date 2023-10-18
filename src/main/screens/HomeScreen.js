@@ -50,7 +50,7 @@ const HomeScreen = () => {
           .format('MM')}-${commObj.selectadDate}`,
       }));
     }
-  }, [commObj.selectedMonth]);
+  }, [commObj.selectedMonth, commObj.selectedYear]);
 
   useEffect(() => {
     console.log('commObj------->', commObj);
@@ -210,19 +210,58 @@ const HomeScreen = () => {
                   }}>
                   <View
                     style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
                       alignItems: 'center',
                       paddingBottom: 15,
                       borderBottomWidth: 1,
                       borderBottomColor: 'lightgray',
+                      gap: 20,
                     }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        lineHeight: 25,
-                        color: '#000',
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        setCommObj(prev => ({
+                          ...prev,
+                          selectedYear: prev.selectedYear - 1,
+                        }));
                       }}>
-                      {moment(commObj.date).format('YYYY')}
-                    </Text>
+                      <View>
+                        <Icon
+                          name="angle-left"
+                          size={20}
+                          style={{
+                            paddingHorizontal: 10,
+                          }}
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          lineHeight: 25,
+                          color: '#000',
+                        }}>
+                        {commObj.selectedYear}
+                      </Text>
+                    </View>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        setCommObj(prev => ({
+                          ...prev,
+                          selectedYear: prev.selectedYear + 1,
+                        }));
+                      }}>
+                      <View>
+                        <Icon
+                          name="angle-right"
+                          size={20}
+                          style={{
+                            paddingHorizontal: 10,
+                          }}
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
                   </View>
                   <View
                     style={{
