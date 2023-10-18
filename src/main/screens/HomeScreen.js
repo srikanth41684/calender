@@ -73,12 +73,12 @@ const HomeScreen = () => {
             initialDate={commObj.date}
             onDayPress={day => {
               console.log('selected dated-------->', day);
-              let date = `${day.year}-${
-                day.month.toString().length === 1 ? '0' + day.month : day.month
-              }-${day.day.toString().length === 1 ? '0' + day.day : day.day}`;
+              // let date = `${day.year}-${
+              //   day.month.toString().length === 1 ? '0' + day.month : day.month
+              // }-${day.day.toString().length === 1 ? '0' + day.day : day.day}`;
               setCommObj(prev => ({
                 ...prev,
-                date: date,
+                date: day.dateString,
                 data: day,
               }));
             }}
@@ -116,6 +116,7 @@ const HomeScreen = () => {
                 ...prev,
                 date: month.dateString,
                 selectadDate: month.day,
+                selectedYear: month.year,
                 selectedMonth: moment()
                   .month(month.month - 1)
                   .format('MMMM'),
