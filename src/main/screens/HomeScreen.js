@@ -17,6 +17,7 @@ const HomeScreen = () => {
     months: moment.months(),
     selectedMonth: null,
     selectedYear: null,
+    selectadDate: null,
     dataInfo: [
       {
         id: 1,
@@ -30,16 +31,29 @@ const HomeScreen = () => {
     const formattedDate = moment(currentDate).format('YYYY-MM-DD');
     let month = moment(currentDate).format('MMMM');
     let year = moment(currentDate).format('YYYY');
+    let date = moment(currentDate).format('DD');
     setCommObj(prev => ({
       ...prev,
       date: formattedDate,
       selectedMonth: month,
       selectedYear: year,
+      selectadDate: date,
     }));
   }, []);
 
   useEffect(() => {
-    console.log('Home commObj------->', commObj);
+    if (commObj.selectedMonth) {
+      setCommObj(prev => ({
+        ...prev,
+        date: `${commObj.selectedYear}-${moment()
+          .month(commObj.selectedMonth)
+          .format('MM')}-${commObj.selectadDate}`,
+      }));
+    }
+  }, [commObj.selectedMonth]);
+
+  useEffect(() => {
+    console.log('commObj------->', commObj);
   }, [commObj]);
   return (
     <SafeAreaView
@@ -56,6 +70,7 @@ const HomeScreen = () => {
             paddingTop: 30,
           }}>
           <Calendar
+            initialDate={commObj.date}
             onDayPress={day => {
               console.log('selected dated-------->', day);
               let date = `${day.year}-${
@@ -95,7 +110,17 @@ const HomeScreen = () => {
               )
             }
             enableSwipeMonths={true}
-            onMonthChange={month => console.log('month----->', month)}
+            onMonthChange={month => {
+              console.log('month change---->', month);
+              setCommObj(prev => ({
+                ...prev,
+                date: month.dateString,
+                selectadDate: month.day,
+                selectedMonth: moment()
+                  .month(month.month - 1)
+                  .format('MMMM'),
+              }));
+            }}
             renderHeader={date => {
               return (
                 <View
@@ -187,7 +212,7 @@ const HomeScreen = () => {
                       alignItems: 'center',
                       paddingBottom: 15,
                       borderBottomWidth: 1,
-                      borderBottomColor: 'lightgray'
+                      borderBottomColor: 'lightgray',
                     }}>
                     <Text
                       style={{
@@ -215,6 +240,7 @@ const HomeScreen = () => {
                               ...prev,
                               selectedMonth: item,
                             }));
+                            setModalVisible(false);
                           }}>
                           <View
                             style={{
