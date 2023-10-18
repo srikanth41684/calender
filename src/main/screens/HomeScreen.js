@@ -90,16 +90,37 @@ const HomeScreen = () => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    gap: 10,
                   }}>
                   <TouchableWithoutFeedback>
-                    <View>
-                      <Text>{month}</Text>
+                    <View
+                      style={{
+                        padding: 5,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: '#000000',
+                          lineHeight: 23,
+                          fontWeight: 'bold',
+                        }}>
+                        {month}
+                      </Text>
                     </View>
                   </TouchableWithoutFeedback>
                   <TouchableWithoutFeedback>
-                    <View>
-                      <Text>{year}</Text>
+                    <View
+                      style={{
+                        padding: 5,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: '#000000',
+                          lineHeight: 23,
+                          fontWeight: 'bold',
+                        }}>
+                        {year}
+                      </Text>
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
