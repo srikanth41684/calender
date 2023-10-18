@@ -9,10 +9,13 @@ import React, {useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment/moment';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
+  const customNavigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [commObj, setCommObj] = useState({
+    todayDate: null,
     date: null,
     months: moment.months(),
     selectedMonth: null,
@@ -21,7 +24,7 @@ const HomeScreen = () => {
     dataInfo: [
       {
         id: 1,
-        titile: 'Today date',
+        titile: 'Selected date',
       },
     ],
   });
@@ -34,6 +37,7 @@ const HomeScreen = () => {
     let date = moment(currentDate).format('DD');
     setCommObj(prev => ({
       ...prev,
+      todayDate: formattedDate,
       date: formattedDate,
       selectedMonth: month,
       selectedYear: year,
@@ -73,26 +77,22 @@ const HomeScreen = () => {
             initialDate={commObj.date}
             onDayPress={day => {
               console.log('selected dated-------->', day);
-              // let date = `${day.year}-${
-              //   day.month.toString().length === 1 ? '0' + day.month : day.month
-              // }-${day.day.toString().length === 1 ? '0' + day.day : day.day}`;
               setCommObj(prev => ({
                 ...prev,
                 date: day.dateString,
                 data: day,
               }));
+              customNavigation.navigate('details', {
+                date: commObj.date,
+              });
             }}
-            markedDates={{
-              [commObj.date]: {
-                selected: true,
-                selectedColor: 'blue',
-              },
-            }}
+            maxDate={commObj.todayDate}
             renderArrow={direction =>
               direction === 'left' ? (
                 <Icon
                   name="angle-left"
                   size={30}
+                  color={'gray'}
                   style={{
                     paddingHorizontal: 10,
                     marginLeft: -10,
@@ -102,6 +102,7 @@ const HomeScreen = () => {
                 <Icon
                   name="angle-right"
                   size={30}
+                  color={'gray'}
                   style={{
                     paddingHorizontal: 10,
                     marginRight: -10,
@@ -111,7 +112,6 @@ const HomeScreen = () => {
             }
             enableSwipeMonths={true}
             onMonthChange={month => {
-              console.log('month change---->', month);
               setCommObj(prev => ({
                 ...prev,
                 date: month.dateString,
@@ -144,23 +144,7 @@ const HomeScreen = () => {
                           lineHeight: 23,
                           fontWeight: 'bold',
                         }}>
-                        {commObj.selectedMonth}
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback>
-                    <View
-                      style={{
-                        padding: 5,
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          color: '#000000',
-                          lineHeight: 23,
-                          fontWeight: 'bold',
-                        }}>
-                        {commObj.selectedYear}
+                        {commObj.selectedMonth} {commObj.selectedYear}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -169,15 +153,30 @@ const HomeScreen = () => {
             }}
           />
         </View>
-        {commObj.dataInfo &&
-          commObj.dataInfo.map((item, index) => {
-            return (
-              <View key={index} style={{}}>
-                <Text style={{}}>{item.titile}</Text>
-                <Text style={{}}>{commObj.date}</Text>
-              </View>
-            );
-          })}
+        <View
+          style={{
+            paddingTop: 50,
+          }}>
+          {commObj.dataInfo &&
+            commObj.dataInfo.map((item, index) => {
+              return (
+                <View key={index} style={{}}>
+                  <Text
+                    style={{
+                      color: '#000000',
+                    }}>
+                    {item.titile}
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#000000',
+                    }}>
+                    {commObj.date}
+                  </Text>
+                </View>
+              );
+            })}
+        </View>
         <Modal
           animationType="fade"
           transparent={true}
@@ -229,6 +228,7 @@ const HomeScreen = () => {
                         <Icon
                           name="angle-left"
                           size={20}
+                          color={'gray'}
                           style={{
                             paddingHorizontal: 10,
                           }}
@@ -247,15 +247,23 @@ const HomeScreen = () => {
                     </View>
                     <TouchableWithoutFeedback
                       onPress={() => {
-                        setCommObj(prev => ({
-                          ...prev,
-                          selectedYear: prev.selectedYear + 1,
-                        }));
+                        let newDate = new Date();
+                        if (newDate.getFullYear() > commObj.selectedYear) {
+                          setCommObj(prev => ({
+                            ...prev,
+                            selectedYear: prev.selectedYear + 1,
+                          }));
+                        }
                       }}>
                       <View>
                         <Icon
                           name="angle-right"
                           size={20}
+                          color={
+                            new Date().getFullYear() > commObj.selectedYear
+                              ? 'gray'
+                              : 'lightgray'
+                          }
                           style={{
                             paddingHorizontal: 10,
                           }}
