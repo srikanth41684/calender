@@ -105,6 +105,8 @@ const HomeScreen = () => {
           }}>
           <Calendar
             initialDate={commObj.date}
+            style={{}}
+            theme={{}}
             onDayPress={day => {
               setCommObj(prev => ({
                 ...prev,
