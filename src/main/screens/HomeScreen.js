@@ -76,7 +76,6 @@ const HomeScreen = () => {
           <Calendar
             initialDate={commObj.date}
             onDayPress={day => {
-              console.log('selected dated-------->', day);
               setCommObj(prev => ({
                 ...prev,
                 date: day.dateString,
