@@ -57,21 +57,6 @@ const HomeScreen = () => {
       }));
     }
 
-    if (
-      commObj.selectedYear < moment(commObj.todayDate).format('YYYY') ||
-      moment(commObj.date).format('MM') < moment(commObj.todayDate).format('MM')
-    ) {
-      setCommObj(prev => ({
-        ...prev,
-        disableMonthChange: true,
-      }));
-    } else {
-      setCommObj(prev => ({
-        ...prev,
-        disableMonthChange: false,
-      }));
-    }
-
     if (commObj.selectedYear < moment(commObj.todayDate).format('YYYY')) {
       setCommObj(prev => ({
         ...prev,
@@ -84,6 +69,24 @@ const HomeScreen = () => {
       }));
     }
   }, [commObj.selectedMonth, commObj.selectedYear]);
+
+  const updateHandler = () => {
+    if (
+      moment(commObj.date).format('MM') <
+        moment(commObj.todayDate).format('MM') ||
+      commObj.selectedYear < moment(commObj.todayDate).format('YYYY')
+    ) {
+      setCommObj(prev => ({
+        ...prev,
+        disableMonthChange: true,
+      }));
+    } else {
+      setCommObj(prev => ({
+        ...prev,
+        disableMonthChange: false,
+      }));
+    }
+  };
 
   useEffect(() => {
     console.log('commObj------->', commObj);
@@ -152,6 +155,7 @@ const HomeScreen = () => {
                   .month(month.month - 1)
                   .format('MMMM'),
               }));
+              updateHandler();
             }}
             renderHeader={() => {
               return (
@@ -323,6 +327,7 @@ const HomeScreen = () => {
                                 selectedMonth: item,
                               }));
                               setModalVisible(false);
+                              updateHandler();
                             }
                           }}>
                           <View
