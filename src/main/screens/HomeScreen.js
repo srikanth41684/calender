@@ -115,7 +115,7 @@ const HomeScreen = () => {
                 date: day.dateString,
                 data: day,
               }));
-              customNavigation.navigate('details', {
+              customNavigation.navigate('toptab', {
                 date: day,
               });
             }}

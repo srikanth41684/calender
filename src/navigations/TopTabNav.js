@@ -1,10 +1,12 @@
 import {View, Text, SafeAreaView} from 'react-native';
 import React, {useEffect} from 'react';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
+const TopTab = createMaterialTopTabNavigator();
 
-const DetailsScreen = props => {
+const TopTabNav = props => {
   useEffect(() => {
-    console.log('DetailsScreen props-------->', props);
+    console.log('TopTabNav props-------->', props);
   }, []);
   return (
     <SafeAreaView
@@ -25,4 +27,4 @@ const DetailsScreen = props => {
   );
 };
 
-export default DetailsScreen;
+export default TopTabNav;
