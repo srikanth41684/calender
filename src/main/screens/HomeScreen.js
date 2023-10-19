@@ -21,6 +21,7 @@ const HomeScreen = () => {
     selectedMonth: null,
     selectedYear: null,
     selectadDate: null,
+    disableMonthChange: false,
     dataInfo: [
       {
         id: 1,
@@ -52,6 +53,17 @@ const HomeScreen = () => {
         date: `${commObj.selectedYear}-${moment()
           .month(commObj.selectedMonth)
           .format('MM')}-${commObj.selectadDate}`,
+      }));
+    }
+    console.log(moment(commObj.todayDate).format('YYYY'));
+
+    if (
+      commObj.selectedYear < moment(commObj.todayDate).format('YYYY') ||
+      moment(commObj.date).format('MM') < moment(commObj.todayDate).format('MM')
+    ) {
+      setCommObj(prev => ({
+        ...prev,
+        disableMonthChange: true,
       }));
     }
   }, [commObj.selectedMonth, commObj.selectedYear]);
@@ -101,13 +113,27 @@ const HomeScreen = () => {
                 <Icon
                   name="angle-right"
                   size={30}
-                  color={'gray'}
+                  color={
+                    commObj.selectedYear <
+                      moment(commObj.todayDate).format('YYYY') ||
+                    moment(commObj.date).format('MM') <
+                      moment(commObj.todayDate).format('MM')
+                      ? 'gray'
+                      : 'lightgray'
+                  }
                   style={{
                     paddingHorizontal: 10,
                     marginRight: -10,
                   }}
                 />
               )
+            }
+            disableArrowRight={
+              commObj.selectedYear < moment(commObj.todayDate).format('YYYY') ||
+              moment(commObj.date).format('MM') <
+                moment(commObj.todayDate).format('MM')
+                ? false
+                : true
             }
             enableSwipeMonths={true}
             onMonthChange={month => {
@@ -302,7 +328,12 @@ const HomeScreen = () => {
                             }}>
                             <Text
                               style={{
-                                color: '#000',
+                                color:
+                                  commObj.selectedYear <
+                                    moment(commObj.todayDate).format('YYYY') ||
+                                  index < moment(commObj.todayDate).format('MM')
+                                    ? '#000000'
+                                    : 'lightgray',
                                 fontSize: 14,
                               }}>
                               {item}
