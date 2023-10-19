@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  FlatList,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 
@@ -22,7 +15,7 @@ const ProfileScreen = () => {
   function getWeeksDatesHandler() {
     let currentDate = moment();
     let weekArr = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 17; i++) {
       let day = currentDate.clone().day(i);
       weekArr.push({
         dayName: day.format('ddd'),
@@ -49,20 +42,7 @@ const ProfileScreen = () => {
           flex: 1,
         }}>
         <View>
-          <FlatList
-            data={commObj.dateWeeks}
-            keyExtractor={item => item.date}
-            renderItem={({item}) => {
-              return (
-                <TouchableWithoutFeedback>
-                  <View>
-                    <Text>{item.dayName}</Text>
-                    <Text>{}</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            }}
-          />
+          <Text>ProfileScreen</Text>
         </View>
       </View>
     </SafeAreaView>
