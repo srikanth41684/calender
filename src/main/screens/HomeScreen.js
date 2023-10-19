@@ -22,6 +22,7 @@ const HomeScreen = () => {
     selectedYear: null,
     selectadDate: null,
     disableMonthChange: false,
+    disableMonthSelect: false,
     dataInfo: [
       {
         id: 1,
@@ -64,6 +65,23 @@ const HomeScreen = () => {
       setCommObj(prev => ({
         ...prev,
         disableMonthChange: true,
+      }));
+    } else {
+      setCommObj(prev => ({
+        ...prev,
+        disableMonthChange: false,
+      }));
+    }
+
+    if (commObj.selectedYear < moment(commObj.todayDate).format('YYYY')) {
+      setCommObj(prev => ({
+        ...prev,
+        disableMonthSelect: true,
+      }));
+    } else {
+      setCommObj(prev => ({
+        ...prev,
+        disableMonthSelect: false,
       }));
     }
   }, [commObj.selectedMonth, commObj.selectedYear]);
@@ -113,14 +131,7 @@ const HomeScreen = () => {
                 <Icon
                   name="angle-right"
                   size={30}
-                  color={
-                    commObj.selectedYear <
-                      moment(commObj.todayDate).format('YYYY') ||
-                    moment(commObj.date).format('MM') <
-                      moment(commObj.todayDate).format('MM')
-                      ? 'gray'
-                      : 'lightgray'
-                  }
+                  color={commObj.disableMonthChange ? 'gray' : 'lightgray'}
                   style={{
                     paddingHorizontal: 10,
                     marginRight: -10,
@@ -128,14 +139,8 @@ const HomeScreen = () => {
                 />
               )
             }
-            disableArrowRight={
-              commObj.selectedYear < moment(commObj.todayDate).format('YYYY') ||
-              moment(commObj.date).format('MM') <
-                moment(commObj.todayDate).format('MM')
-                ? false
-                : true
-            }
-            enableSwipeMonths={true}
+            disableArrowRight={commObj.disableMonthChange ? false : true}
+            enableSwipeMonths={commObj.disableMonthChange ? true : false}
             onMonthChange={month => {
               setCommObj(prev => ({
                 ...prev,
@@ -272,8 +277,7 @@ const HomeScreen = () => {
                     </View>
                     <TouchableWithoutFeedback
                       onPress={() => {
-                        let newDate = new Date();
-                        if (newDate.getFullYear() > commObj.selectedYear) {
+                        if (commObj.disableMonthChange) {
                           setCommObj(prev => ({
                             ...prev,
                             selectedYear: prev.selectedYear + 1,
@@ -309,11 +313,16 @@ const HomeScreen = () => {
                         <TouchableWithoutFeedback
                           key={index}
                           onPress={() => {
-                            setCommObj(prev => ({
-                              ...prev,
-                              selectedMonth: item,
-                            }));
-                            setModalVisible(false);
+                            if (
+                              commObj.disableMonthSelect ||
+                              index < moment(commObj.todayDate).format('MM')
+                            ) {
+                              setCommObj(prev => ({
+                                ...prev,
+                                selectedMonth: item,
+                              }));
+                              setModalVisible(false);
+                            }
                           }}>
                           <View
                             style={{
@@ -329,8 +338,7 @@ const HomeScreen = () => {
                             <Text
                               style={{
                                 color:
-                                  commObj.selectedYear <
-                                    moment(commObj.todayDate).format('YYYY') ||
+                                  commObj.disableMonthSelect ||
                                   index < moment(commObj.todayDate).format('MM')
                                     ? '#000000'
                                     : 'lightgray',
