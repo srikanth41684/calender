@@ -112,7 +112,7 @@ const HomeScreen = () => {
                 data: day,
               }));
               customNavigation.navigate('details', {
-                date: commObj.date,
+                date: day,
               });
             }}
             maxDate={commObj.todayDate}

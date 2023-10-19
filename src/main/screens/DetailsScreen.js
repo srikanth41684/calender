@@ -1,7 +1,10 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const DetailsScreen = props => {
+  useEffect(() => {
+    console.log('DetailsScreen props-------->', props);
+  }, []);
   return (
     <View>
       <Text
@@ -10,7 +13,7 @@ const DetailsScreen = props => {
           fontSize: 16,
           color: '#000',
         }}>
-        DetailsScreen: {props.route.params.date}
+        DetailsScreen: {props.route.params.date.dateString}
       </Text>
     </View>
   );
