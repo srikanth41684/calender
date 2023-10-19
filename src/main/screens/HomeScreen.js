@@ -56,7 +56,6 @@ const HomeScreen = () => {
           .format('MM')}-${commObj.selectadDate}`,
       }));
     }
-    console.log(moment(commObj.todayDate).format('YYYY'));
 
     if (
       commObj.selectedYear < moment(commObj.todayDate).format('YYYY') ||
