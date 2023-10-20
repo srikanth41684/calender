@@ -106,7 +106,7 @@ const HomeScreen = () => {
       });
     } else {
       console.log('No');
-      Alert.alert("you con't apply the leave");
+      Alert.alert('This is not current financial year....');
     }
   };
 
