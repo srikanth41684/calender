@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   Modal,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -57,18 +58,18 @@ const HomeScreen = () => {
       }));
     }
 
-    if (commObj.selectedYear < moment(commObj.todayDate).format('YYYY')) {
-      setCommObj(prev => ({
-        ...prev,
-        disableMonthSelect: true,
-      }));
-    } else {
-      setCommObj(prev => ({
-        ...prev,
-        disableMonthSelect: false,
-      }));
-    }
-  }, [commObj.selectedMonth, commObj.selectedYear]);
+    // if (commObj.selectedYear < moment(commObj.todayDate).format('YYYY')) {
+    //   setCommObj(prev => ({
+    //     ...prev,
+    //     disableMonthSelect: true,
+    //   }));
+    // } else {
+    //   setCommObj(prev => ({
+    //     ...prev,
+    //     disableMonthSelect: false,
+    //   }));
+    // }
+  }, [commObj.selectedMonth]);
 
   const updateHandler = () => {
     if (
@@ -85,6 +86,25 @@ const HomeScreen = () => {
         ...prev,
         disableMonthChange: false,
       }));
+    }
+  };
+
+  const leaveApplyHandler = day => {
+    const selectedMonth = moment().month(commObj.selectedMonth).format('MM');
+    const selectadDate = day;
+    const endMonth = moment().month('March').format('MM');
+    const selectedYear = commObj.selectedYear;
+    const currentYear = moment(commObj.todayDate).format('YYYY');
+    if (
+      (selectedMonth == endMonth && selectadDate > 31) ||
+      (currentYear == selectedYear && selectedMonth > endMonth) ||
+      (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
+    ) {
+      console.log('yes');
+      Alert.alert('You can apply the leave');
+    } else {
+      console.log('No');
+      Alert.alert("you con't apply the leave");
     }
   };
 
@@ -113,11 +133,11 @@ const HomeScreen = () => {
               setCommObj(prev => ({
                 ...prev,
                 date: day.dateString,
-                data: day,
               }));
-              customNavigation.navigate('toptab', {
-                date: day,
-              });
+              leaveApplyHandler(day.day);
+              // customNavigation.navigate('toptab', {
+              //   date: day,
+              // });
             }}
             // maxDate={commObj.todayDate}
             renderArrow={direction =>
@@ -151,13 +171,13 @@ const HomeScreen = () => {
               setCommObj(prev => ({
                 ...prev,
                 date: month.dateString,
-                selectadDate: month.day,
                 selectedYear: month.year,
+                selectadDate: month.day,
                 selectedMonth: moment()
                   .month(month.month - 1)
                   .format('MMMM'),
               }));
-              updateHandler();
+              // updateHandler();
             }}
             renderHeader={() => {
               return (
@@ -341,7 +361,7 @@ const HomeScreen = () => {
                               selectedMonth: item,
                             }));
                             setModalVisible(false);
-                            updateHandler();
+                            // updateHandler();
                           }}>
                           <View
                             style={{
