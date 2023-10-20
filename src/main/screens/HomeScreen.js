@@ -89,7 +89,7 @@ const HomeScreen = () => {
     }
   };
 
-  const leaveApplyHandler = day => {
+  const leaveApplyHandler = (day, data) => {
     const selectedMonth = moment().month(commObj.selectedMonth).format('MM');
     const selectadDate = day;
     const endMonth = moment().month('March').format('MM');
@@ -101,7 +101,9 @@ const HomeScreen = () => {
       (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
     ) {
       console.log('yes');
-      Alert.alert('You can apply the leave');
+      customNavigation.navigate('toptab', {
+        date: data,
+      });
     } else {
       console.log('No');
       Alert.alert("you con't apply the leave");
@@ -134,7 +136,7 @@ const HomeScreen = () => {
                 ...prev,
                 date: day.dateString,
               }));
-              leaveApplyHandler(day.day);
+              leaveApplyHandler(day.day, day);
               // customNavigation.navigate('toptab', {
               //   date: day,
               // });
