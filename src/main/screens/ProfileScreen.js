@@ -37,30 +37,30 @@ const ProfileScreen = () => {
     }));
   }
 
-  // const leftHandler = () => {
-  //   let currentDate = moment(commObj.dateWeeks[0].date);
-  //   console.log(currentDate);
-  //   let convertedDate = currentDate.subtract(1, 'days');
-  //   console.log(convertedDate);
-  //   let currDate = convertedDate.format('YYYY-MM-DD');
-  //   console.log(currDate);
-  //   let weekData = [];
-  //   for (let i = 0; i < 7; i++) {
-  //     let day = convertedDate.clone().subtract(i, 'days');
-  //     weekData.push({
-  //       dayName: day.format('ddd'),
-  //       monthName: day.format('MMMM'),
-  //       date: day.format('YYYY-MM-DD'),
-  //     });
-  //   }
+  const leftHandler = () => {
+    let currentDate = moment(commObj.dateWeeks[0].date);
+    console.log(currentDate);
+    let convertedDate = currentDate.subtract(1, 'days');
+    console.log(convertedDate);
+    let currDate = convertedDate.format('YYYY-MM-DD');
+    console.log(currDate);
+    let weekData = [];
+    for (let i = 0; i < 7; i++) {
+      let day = convertedDate.clone().subtract(i, 'days');
+      weekData.push({
+        dayName: day.format('ddd'),
+        monthName: day.format('MMMM'),
+        date: day.format('YYYY-MM-DD'),
+      });
+    }
 
-  //   console.log('weekData---->', weekData);
+    console.log('weekData---->', weekData);
 
-  //   setCommObj(prev => ({
-  //     ...prev,
-  //     dateWeeks: weekData.reverse(),
-  //   }));
-  // };
+    setCommObj(prev => ({
+      ...prev,
+      dateWeeks: weekData.reverse(),
+    }));
+  };
 
   const rightHandler = () => {
     const currentMonth = moment();
