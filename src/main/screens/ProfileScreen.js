@@ -1,4 +1,10 @@
-import {View, Text, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 
@@ -6,6 +12,7 @@ const ProfileScreen = () => {
   const [commObj, setCommObj] = useState({
     dateWeeks: [],
     todayDate: new Date(),
+    monthName: moment().format('MMMM'),
   });
 
   useEffect(() => {
@@ -19,6 +26,7 @@ const ProfileScreen = () => {
       let day = currentDate.clone().day(i);
       weekArr.push({
         dayName: day.format('ddd'),
+        monthName: day.format('MMMM'),
         date: day.format('YYYY-MM-DD'),
       });
     }
@@ -29,26 +37,52 @@ const ProfileScreen = () => {
     }));
   }
 
-  const leftHandler = () => {
-    var currentDate = moment(commObj.dateWeeks[0].date);
-    var weekData = [];
-    for (var i = 0; i < 7; i++) {
-      var day = currentDate.clone().subtract(i, 'days');
-      weekData.push({
-        dayName: day.format('ddd'),
-        date: day.format('YYYY-MM-DD'),
-      });
-    }
+  // const leftHandler = () => {
+  //   let currentDate = moment(commObj.dateWeeks[0].date);
+  //   console.log(currentDate);
+  //   let convertedDate = currentDate.subtract(1, 'days');
+  //   console.log(convertedDate);
+  //   let currDate = convertedDate.format('YYYY-MM-DD');
+  //   console.log(currDate);
+  //   let weekData = [];
+  //   for (let i = 0; i < 7; i++) {
+  //     let day = convertedDate.clone().subtract(i, 'days');
+  //     weekData.push({
+  //       dayName: day.format('ddd'),
+  //       monthName: day.format('MMMM'),
+  //       date: day.format('YYYY-MM-DD'),
+  //     });
+  //   }
 
-    console.log('weekData---->', weekData);
+  //   console.log('weekData---->', weekData);
+
+  //   setCommObj(prev => ({
+  //     ...prev,
+  //     dateWeeks: weekData.reverse(),
+  //   }));
+  // };
+
+  const rightHandler = () => {
+    const currentMonth = moment();
+    const firstDay = currentMonth.clone().startOf('month');
+    const lastDay = currentMonth.clone().endOf('month');
+
+    const allDays = [];
+
+    let currentDay = firstDay.clone();
+
+    while (currentDay.isSameOrBefore(lastDay)) {
+      allDays.push({
+        date: currentDay.format('YYYY-MM-DD'),
+      });
+      currentDay.add(1, 'day');
+    }
 
     setCommObj(prev => ({
       ...prev,
-      dateWeeks: weekData.reverse(),
+      dateWeeks: allDays,
     }));
   };
-
-  const rightHandler = () => {};
 
   useEffect(() => {
     console.log('commObj----->', commObj);
@@ -65,21 +99,48 @@ const ProfileScreen = () => {
         }}>
         <View>
           <Text>ProfileScreen</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            {commObj.dateWeeks.map((item, index) => {
-              return (
-                <TouchableWithoutFeedback key={index}>
-                  <View>
-                    <Text>{item.dayName}</Text>
-                    <Text>{moment(item.date).format('DD')}</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
+          <View>
+            <View
+              style={{
+                alignItems: 'center',
+                paddingVertical: 20,
+              }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  lineHeight: 27,
+                  fontWeight: 'bold',
+                  color: '#000000',
+                }}>
+                {commObj.monthName}
+              </Text>
+            </View>
+            <ScrollView>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                {commObj.dateWeeks.map((item, index) => {
+                  return (
+                    <View key={index}>
+                      <TouchableWithoutFeedback>
+                        <View
+                          style={{
+                            backgroundColor: '#ffffff',
+                            paddingHorizontal: 10,
+                            paddingVertical: 10,
+                            borderRadius: 10,
+                          }}>
+                          <Text>{item.dayName}</Text>
+                          <Text>{moment(item.date).format('DD')}</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  );
+                })}
+              </View>
+            </ScrollView>
           </View>
           <TouchableWithoutFeedback
             onPress={() => {
