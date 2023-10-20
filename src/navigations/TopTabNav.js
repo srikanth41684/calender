@@ -27,7 +27,7 @@ const TopTabNav = props => {
           }}>
           DetailsScreen: {props.route.params.date.dateString}
         </Text>
-        <View
+        {/* <View
           style={{
             flex: 1,
           }}>
@@ -35,7 +35,7 @@ const TopTabNav = props => {
             <TopTab.Screen name="details" component={YourDetails} />
             <TopTab.Screen name="detailsteam" component={DetailsTeam} />
           </TopTab.Navigator>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );

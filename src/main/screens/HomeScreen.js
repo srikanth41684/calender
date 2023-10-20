@@ -119,7 +119,7 @@ const HomeScreen = () => {
                 date: day,
               });
             }}
-            maxDate={commObj.todayDate}
+            // maxDate={commObj.todayDate}
             renderArrow={direction =>
               direction === 'left' ? (
                 <Icon
@@ -135,7 +135,8 @@ const HomeScreen = () => {
                 <Icon
                   name="angle-right"
                   size={30}
-                  color={commObj.disableMonthChange ? 'gray' : 'lightgray'}
+                  // color={commObj.disableMonthChange ? 'gray' : 'lightgray'}
+                  color={'gray'}
                   style={{
                     paddingHorizontal: 10,
                     marginRight: -10,
@@ -143,8 +144,9 @@ const HomeScreen = () => {
                 />
               )
             }
-            disableArrowRight={commObj.disableMonthChange ? false : true}
-            enableSwipeMonths={commObj.disableMonthChange ? true : false}
+            // disableArrowRight={commObj.disableMonthChange ? false : true}
+            // enableSwipeMonths={commObj.disableMonthChange ? true : false}
+            enableSwipeMonths={true}
             onMonthChange={month => {
               setCommObj(prev => ({
                 ...prev,
@@ -282,22 +284,27 @@ const HomeScreen = () => {
                     </View>
                     <TouchableWithoutFeedback
                       onPress={() => {
-                        if (commObj.disableMonthChange) {
-                          setCommObj(prev => ({
-                            ...prev,
-                            selectedYear: prev.selectedYear + 1,
-                          }));
-                        }
+                        // if (commObj.disableMonthChange) {
+                        // setCommObj(prev => ({
+                        //   ...prev,
+                        //   selectedYear: prev.selectedYear + 1,
+                        // }));
+                        // }
+                        setCommObj(prev => ({
+                          ...prev,
+                          selectedYear: prev.selectedYear + 1,
+                        }));
                       }}>
                       <View>
                         <Icon
                           name="angle-right"
                           size={20}
-                          color={
-                            new Date().getFullYear() > commObj.selectedYear
-                              ? 'gray'
-                              : 'lightgray'
-                          }
+                          // color={
+                          //   new Date().getFullYear() > commObj.selectedYear
+                          //     ? 'gray'
+                          //     : 'lightgray'
+                          // }
+                          color={'gray'}
                           style={{
                             paddingHorizontal: 10,
                           }}
@@ -318,17 +325,23 @@ const HomeScreen = () => {
                         <TouchableWithoutFeedback
                           key={index}
                           onPress={() => {
-                            if (
-                              commObj.disableMonthSelect ||
-                              index < moment(commObj.todayDate).format('MM')
-                            ) {
-                              setCommObj(prev => ({
-                                ...prev,
-                                selectedMonth: item,
-                              }));
-                              setModalVisible(false);
-                              updateHandler();
-                            }
+                            // if (
+                            //   commObj.disableMonthSelect ||
+                            //   index < moment(commObj.todayDate).format('MM')
+                            // ) {
+                            //   setCommObj(prev => ({
+                            //     ...prev,
+                            //     selectedMonth: item,
+                            //   }));
+                            //   setModalVisible(false);
+                            //   updateHandler();
+                            // }
+                            setCommObj(prev => ({
+                              ...prev,
+                              selectedMonth: item,
+                            }));
+                            setModalVisible(false);
+                            updateHandler();
                           }}>
                           <View
                             style={{
@@ -343,11 +356,12 @@ const HomeScreen = () => {
                             }}>
                             <Text
                               style={{
-                                color:
-                                  commObj.disableMonthSelect ||
-                                  index < moment(commObj.todayDate).format('MM')
-                                    ? '#000000'
-                                    : 'lightgray',
+                                // color:
+                                //   commObj.disableMonthSelect ||
+                                //   index < moment(commObj.todayDate).format('MM')
+                                //     ? '#000000'
+                                //     : 'lightgray',
+                                color: '#000000',
                                 fontSize: 14,
                               }}>
                               {item}
