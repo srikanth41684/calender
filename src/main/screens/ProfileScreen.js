@@ -25,12 +25,9 @@ const ProfileScreen = () => {
     for (let i = 0; i < 7; i++) {
       let day = currentDate.clone().day(i);
       weekArr.push({
-        dayName: day.format('ddd'),
-        monthName: day.format('MMMM'),
         date: day.format('YYYY-MM-DD'),
       });
     }
-
     setCommObj(prev => ({
       ...prev,
       dateWeeks: weekArr,
@@ -39,22 +36,14 @@ const ProfileScreen = () => {
 
   const leftHandler = () => {
     let currentDate = moment(commObj.dateWeeks[0].date);
-    console.log(currentDate);
     let convertedDate = currentDate.subtract(1, 'days');
-    console.log(convertedDate);
-    let currDate = convertedDate.format('YYYY-MM-DD');
-    console.log(currDate);
     let weekData = [];
     for (let i = 0; i < 7; i++) {
       let day = convertedDate.clone().subtract(i, 'days');
       weekData.push({
-        dayName: day.format('ddd'),
-        monthName: day.format('MMMM'),
         date: day.format('YYYY-MM-DD'),
       });
     }
-
-    console.log('weekData---->', weekData);
 
     setCommObj(prev => ({
       ...prev,
@@ -63,24 +52,19 @@ const ProfileScreen = () => {
   };
 
   const rightHandler = () => {
-    const currentMonth = moment();
-    const firstDay = currentMonth.clone().startOf('month');
-    const lastDay = currentMonth.clone().endOf('month');
-
-    const allDays = [];
-
-    let currentDay = firstDay.clone();
-
-    while (currentDay.isSameOrBefore(lastDay)) {
-      allDays.push({
-        date: currentDay.format('YYYY-MM-DD'),
+    let currentDate = moment(commObj.dateWeeks[6].date);
+    let convertedDate = currentDate.add(1, 'days');
+    let weekData = [];
+    for (let i = 0; i < 7; i++) {
+      let day = convertedDate.clone().add(i, 'days');
+      weekData.push({
+        date: day.format('YYYY-MM-DD'),
       });
-      currentDay.add(1, 'day');
     }
 
     setCommObj(prev => ({
       ...prev,
-      dateWeeks: allDays,
+      dateWeeks: weekData,
     }));
   };
 
@@ -132,7 +116,7 @@ const ProfileScreen = () => {
                             paddingVertical: 10,
                             borderRadius: 10,
                           }}>
-                          <Text>{item.dayName}</Text>
+                          <Text>{moment(item.date).format('ddd')}</Text>
                           <Text>{moment(item.date).format('DD')}</Text>
                         </View>
                       </TouchableWithoutFeedback>
