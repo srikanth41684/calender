@@ -1,17 +1,10 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from 'react-native';
+import {View, Text, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 
 const ProfileScreen = () => {
   const [commObj, setCommObj] = useState({
     dateWeeks: [],
-    todayDate: new Date(),
     selectedDate: moment().format('YYYY-MM-DD'),
   });
 
@@ -82,12 +75,17 @@ const ProfileScreen = () => {
           paddingHorizontal: 20,
         }}>
         <View>
-          <Text>ProfileScreen</Text>
+          <Text
+            style={{
+              color: '#000',
+            }}>
+            ProfileScreen
+          </Text>
           <View>
             <View
               style={{
                 alignItems: 'center',
-                paddingVertical: 20,
+                paddingTop: 20,
               }}>
               <Text
                 style={{
@@ -109,54 +107,78 @@ const ProfileScreen = () => {
                 onPress={() => {
                   leftHandler();
                 }}>
-                <View>
-                  <Text>left</Text>
+                <View
+                  style={{
+                    padding: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#000',
+                    }}>
+                    left
+                  </Text>
                 </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
                 onPress={() => {
                   rightHandler();
                 }}>
-                <View>
-                  <Text>right</Text>
+                <View
+                  style={{
+                    padding: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#000',
+                    }}>
+                    right
+                  </Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
-            <ScrollView>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                {commObj.dateWeeks.map((item, index) => {
-                  return (
-                    <View key={index}>
-                      <TouchableWithoutFeedback
-                        onPress={() => {
-                          setCommObj(prev => ({
-                            ...prev,
-                            selectedDate: item.date,
-                          }));
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              {commObj.dateWeeks.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        setCommObj(prev => ({
+                          ...prev,
+                          selectedDate: item.date,
+                        }));
+                      }}>
+                      <View
+                        style={{
+                          backgroundColor:
+                            item.date === commObj.selectedDate
+                              ? 'lightgreen'
+                              : '#ffffff',
+                          paddingHorizontal: 10,
+                          paddingVertical: 10,
+                          borderRadius: 10,
                         }}>
-                        <View
+                        <Text
                           style={{
-                            backgroundColor:
-                              item.date === commObj.selectedDate
-                                ? 'lightgreen'
-                                : '#ffffff',
-                            paddingHorizontal: 10,
-                            paddingVertical: 10,
-                            borderRadius: 10,
+                            color: '#000',
                           }}>
-                          <Text>{moment(item.date).format('ddd')}</Text>
-                          <Text>{moment(item.date).format('DD')}</Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                  );
-                })}
-              </View>
-            </ScrollView>
+                          {moment(item.date).format('ddd')}
+                        </Text>
+                        <Text
+                          style={{
+                            color: '#000',
+                          }}>
+                          {moment(item.date).format('DD')}
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                );
+              })}
+            </View>
           </View>
         </View>
       </View>
