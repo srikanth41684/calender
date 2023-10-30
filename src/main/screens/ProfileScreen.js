@@ -94,7 +94,8 @@ const ProfileScreen = () => {
                   fontWeight: 'bold',
                   color: '#000000',
                 }}>
-                {moment(commObj.selectedDate).format('MMMM')}
+                {moment(commObj.selectedDate).format('MMMM')}{' '}
+                {moment(commObj.selectedDate).year()}
               </Text>
             </View>
             <View
@@ -178,6 +179,19 @@ const ProfileScreen = () => {
                   </View>
                 );
               })}
+            </View>
+            <View
+              style={{
+                paddingTop: 20,
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: '#000',
+                  fontSize: 18,
+                }}>
+                {commObj.selectedDate}
+              </Text>
             </View>
           </View>
         </View>
