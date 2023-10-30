@@ -12,7 +12,7 @@ const ProfileScreen = () => {
   const [commObj, setCommObj] = useState({
     dateWeeks: [],
     todayDate: new Date(),
-    monthName: moment().format('MMMM'),
+    selectedDate: moment().format('YYYY-MM-DD'),
   });
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const ProfileScreen = () => {
   };
 
   useEffect(() => {
-    console.log('commObj----->', commObj);
+    console.log('Profile-commObj----->', commObj);
   }, [commObj]);
   return (
     <SafeAreaView
@@ -96,8 +96,31 @@ const ProfileScreen = () => {
                   fontWeight: 'bold',
                   color: '#000000',
                 }}>
-                {commObj.monthName}
+                {moment(commObj.selectedDate).format('MMMM')}
               </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                padding: 10,
+              }}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  leftHandler();
+                }}>
+                <View>
+                  <Text>left</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  rightHandler();
+                }}>
+                <View>
+                  <Text>right</Text>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
             <ScrollView>
               <View
@@ -108,10 +131,19 @@ const ProfileScreen = () => {
                 {commObj.dateWeeks.map((item, index) => {
                   return (
                     <View key={index}>
-                      <TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback
+                        onPress={() => {
+                          setCommObj(prev => ({
+                            ...prev,
+                            selectedDate: item.date,
+                          }));
+                        }}>
                         <View
                           style={{
-                            backgroundColor: '#ffffff',
+                            backgroundColor:
+                              item.date === commObj.selectedDate
+                                ? 'lightgreen'
+                                : '#ffffff',
                             paddingHorizontal: 10,
                             paddingVertical: 10,
                             borderRadius: 10,
@@ -126,22 +158,6 @@ const ProfileScreen = () => {
               </View>
             </ScrollView>
           </View>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              leftHandler();
-            }}>
-            <View>
-              <Text>left</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              rightHandler();
-            }}>
-            <View>
-              <Text>right</Text>
-            </View>
-          </TouchableWithoutFeedback>
         </View>
       </View>
     </SafeAreaView>
