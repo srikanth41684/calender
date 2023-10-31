@@ -74,6 +74,7 @@ const ProfileScreen = () => {
         style={{
           flex: 1,
           paddingHorizontal: 20,
+          backgroundColor: '#F4F7FE',
         }}>
         <View>
           <Text
@@ -82,13 +83,18 @@ const ProfileScreen = () => {
             }}>
             ProfileScreen
           </Text>
-          <View>
+          <View
+            style={{
+              backgroundColor: '#ffffff',
+              paddingBottom: 20,
+              paddingTop: 10,
+              borderRadius: 10,
+            }}>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: 10,
               }}>
               <TouchableWithoutFeedback
                 onPress={() => {
@@ -191,19 +197,19 @@ const ProfileScreen = () => {
                 );
               })}
             </View>
-            <View
+          </View>
+          <View
+            style={{
+              paddingTop: 20,
+              paddingLeft: 10,
+            }}>
+            <Text
               style={{
-                paddingTop: 20,
-                paddingLeft: 10,
+                color: '#000',
+                fontSize: 18,
               }}>
-              <Text
-                style={{
-                  color: '#000',
-                  fontSize: 18,
-                }}>
-                {commObj.selectedDate}
-              </Text>
-            </View>
+              {commObj.selectedDate}
+            </Text>
           </View>
         </View>
       </View>
