@@ -1,6 +1,7 @@
 import {View, Text, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ProfileScreen = () => {
   const [commObj, setCommObj] = useState({
@@ -84,24 +85,9 @@ const ProfileScreen = () => {
           <View>
             <View
               style={{
-                alignItems: 'center',
-                paddingTop: 20,
-              }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  lineHeight: 27,
-                  fontWeight: 'bold',
-                  color: '#000000',
-                }}>
-                {moment(commObj.selectedDate).format('MMMM')}{' '}
-                {moment(commObj.selectedDate).year()}
-              </Text>
-            </View>
-            <View
-              style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                alignItems: 'center',
                 padding: 10,
               }}>
               <TouchableWithoutFeedback
@@ -112,14 +98,32 @@ const ProfileScreen = () => {
                   style={{
                     padding: 10,
                   }}>
-                  <Text
+                  <Icon
+                    name="angle-left"
+                    size={30}
+                    color={'gray'}
                     style={{
-                      color: '#000',
-                    }}>
-                    left
-                  </Text>
+                      paddingHorizontal: 10,
+                      marginLeft: -10,
+                    }}
+                  />
                 </View>
               </TouchableWithoutFeedback>
+              <View
+                style={{
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    lineHeight: 27,
+                    fontWeight: 'bold',
+                    color: '#000000',
+                  }}>
+                  {moment(commObj.selectedDate).format('MMMM')}{' '}
+                  {moment(commObj.selectedDate).year()}
+                </Text>
+              </View>
               <TouchableWithoutFeedback
                 onPress={() => {
                   rightHandler();
@@ -128,12 +132,14 @@ const ProfileScreen = () => {
                   style={{
                     padding: 10,
                   }}>
-                  <Text
+                  <Icon
+                    name="angle-right"
+                    size={30}
+                    color={'gray'}
                     style={{
-                      color: '#000',
-                    }}>
-                    right
-                  </Text>
+                      paddingHorizontal: 10,
+                    }}
+                  />
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -154,23 +160,28 @@ const ProfileScreen = () => {
                       }}>
                       <View
                         style={{
+                          width: 45,
+                          height: 50,
                           backgroundColor:
                             item.date === commObj.selectedDate
                               ? 'lightgreen'
                               : '#ffffff',
-                          paddingHorizontal: 10,
-                          paddingVertical: 10,
                           borderRadius: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}>
                         <Text
                           style={{
                             color: '#000',
+                            fontSize: 12,
                           }}>
                           {moment(item.date).format('ddd')}
                         </Text>
                         <Text
                           style={{
                             color: '#000',
+                            fontSize: 16,
+                            fontWeight: 'bold',
                           }}>
                           {moment(item.date).format('DD')}
                         </Text>
