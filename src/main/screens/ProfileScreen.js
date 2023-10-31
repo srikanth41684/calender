@@ -74,7 +74,7 @@ const ProfileScreen = () => {
         style={{
           flex: 1,
           paddingHorizontal: 20,
-          backgroundColor: '#F4F7FE',
+          backgroundColor: '#EFF1FE',
         }}>
         <View>
           <Text
@@ -95,6 +95,7 @@ const ProfileScreen = () => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                paddingBottom: 10,
               }}>
               <TouchableWithoutFeedback
                 onPress={() => {
@@ -121,8 +122,8 @@ const ProfileScreen = () => {
                 }}>
                 <Text
                   style={{
-                    fontSize: 20,
-                    lineHeight: 27,
+                    fontSize: 18,
+                    lineHeight: 25,
                     fontWeight: 'bold',
                     color: '#000000',
                   }}>
@@ -170,7 +171,7 @@ const ProfileScreen = () => {
                           height: 50,
                           backgroundColor:
                             item.date === commObj.selectedDate
-                              ? 'lightgreen'
+                              ? '#E4E4FF'
                               : '#ffffff',
                           borderRadius: 10,
                           alignItems: 'center',
@@ -178,7 +179,7 @@ const ProfileScreen = () => {
                         }}>
                         <Text
                           style={{
-                            color: '#000',
+                            color: '#777777',
                             fontSize: 12,
                           }}>
                           {moment(item.date).format('ddd')}
@@ -187,7 +188,7 @@ const ProfileScreen = () => {
                           style={{
                             color: '#000',
                             fontSize: 16,
-                            fontWeight: 'bold',
+                            fontWeight: '500',
                           }}>
                           {moment(item.date).format('DD')}
                         </Text>
