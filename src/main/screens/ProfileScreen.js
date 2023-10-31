@@ -73,7 +73,7 @@ const ProfileScreen = () => {
       <View
         style={{
           flex: 1,
-          paddingHorizontal: 20,
+          paddingHorizontal: 15,
           backgroundColor: '#EFF1FE',
         }}>
         <View>
@@ -111,7 +111,6 @@ const ProfileScreen = () => {
                     color={'gray'}
                     style={{
                       paddingHorizontal: 10,
-                      marginLeft: -10,
                     }}
                   />
                 </View>
@@ -154,6 +153,7 @@ const ProfileScreen = () => {
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                paddingHorizontal: 5,
               }}>
               {commObj.dateWeeks.map((item, index) => {
                 return (
