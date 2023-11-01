@@ -83,7 +83,7 @@ const ProfileScreen = () => {
             }}>
             ProfileScreen
           </Text>
-          {/* <View
+          <View
             style={{
               backgroundColor: '#ffffff',
               paddingBottom: 20,
@@ -211,7 +211,7 @@ const ProfileScreen = () => {
               }}>
               {commObj.selectedDate}
             </Text>
-          </View> */}
+          </View>
         </View>
       </View>
     </SafeAreaView>
