@@ -140,40 +140,49 @@ const HomeScreen = () => {
             markedDates={{}}
             dayComponent={({date, state}) => {
               return (
-                <View>
-                  {moment(date.dateString).format('ddd') === 'Sun' ||
-                  moment(date.dateString).format('ddd') === 'Sat' ? (
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        color: state === 'disabled' ? 'lightgray' : 'red',
-                      }}>
-                      {date.day}
-                    </Text>
-                  ) : (
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        color: state === 'disabled' ? 'lightgray' : 'black',
-                      }}>
-                      {date.day}
-                    </Text>
-                  )}
-                </View>
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    setCommObj(prev => ({
+                      ...prev,
+                      date: date.dateString,
+                    }));
+                    leaveApplyHandler(date.day, date);
+                  }}>
+                  <View>
+                    {moment(date.dateString).format('ddd') === 'Sun' ||
+                    moment(date.dateString).format('ddd') === 'Sat' ? (
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          color: state === 'disabled' ? 'lightgray' : 'red',
+                        }}>
+                        {date.day}
+                      </Text>
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          color: state === 'disabled' ? 'lightgray' : 'black',
+                        }}>
+                        {date.day}
+                      </Text>
+                    )}
+                  </View>
+                </TouchableWithoutFeedback>
               );
             }}
             style={{}}
             theme={{}}
-            onDayPress={day => {
-              setCommObj(prev => ({
-                ...prev,
-                date: day.dateString,
-              }));
-              leaveApplyHandler(day.day, day);
-              // customNavigation.navigate('toptab', {
-              //   date: day,
-              // });
-            }}
+            // onDayPress={day => {
+            //   setCommObj(prev => ({
+            //     ...prev,
+            //     date: day.dateString,
+            //   }));
+            //   leaveApplyHandler(day.day, day);
+            //   // customNavigation.navigate('toptab', {
+            //   //   date: day,
+            //   // });
+            // }}
             // maxDate={commObj.todayDate}
             renderArrow={direction =>
               direction === 'left' ? (
