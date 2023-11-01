@@ -77,12 +77,19 @@ const ProfileScreen = () => {
           backgroundColor: '#EFF1FE',
         }}>
         <View>
-          <Text
+          <View
             style={{
-              color: '#000',
+              alignItems: 'center',
+              paddingVertical: 30,
             }}>
-            ProfileScreen
-          </Text>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 16,
+              }}>
+              ProfileScreen
+            </Text>
+          </View>
           <View
             style={{
               backgroundColor: '#ffffff',
