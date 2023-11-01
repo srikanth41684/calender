@@ -110,8 +110,15 @@ const HomeScreen = () => {
     }
   };
 
+  const markedDates = {
+    '2023-11-04': {disabled: true},
+    '2023-11-05': {disabled: true},
+    '2023-11-11': {disabled: true},
+    '2023-11-12': {disabled: true},
+  };
+
   useEffect(() => {
-    console.log('commObj------->', commObj);
+    console.log('Home-commObj------->', moment().format('ddd'));
   }, [commObj]);
   return (
     <SafeAreaView
@@ -129,6 +136,32 @@ const HomeScreen = () => {
           }}>
           <Calendar
             initialDate={commObj.date}
+            markingType="period"
+            markedDates={{}}
+            dayComponent={({date, state}) => {
+              return (
+                <View>
+                  {moment(date.dateString).format('ddd') === 'Sun' ||
+                  moment(date.dateString).format('ddd') === 'Sat' ? (
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: state === 'disabled' ? 'lightgray' : 'red',
+                      }}>
+                      {date.day}
+                    </Text>
+                  ) : (
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: state === 'disabled' ? 'lightgray' : 'black',
+                      }}>
+                      {date.day}
+                    </Text>
+                  )}
+                </View>
+              );
+            }}
             style={{}}
             theme={{}}
             onDayPress={day => {
