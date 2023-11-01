@@ -148,7 +148,10 @@ const HomeScreen = () => {
                     }));
                     leaveApplyHandler(date.day, date);
                   }}>
-                  <View>
+                  <View
+                    style={{
+                      padding: 5,
+                    }}>
                     {moment(date.dateString).format('ddd') === 'Sun' ||
                     moment(date.dateString).format('ddd') === 'Sat' ? (
                       <Text
