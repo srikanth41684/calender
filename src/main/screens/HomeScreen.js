@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   Modal,
-  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -17,16 +16,10 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [commObj, setCommObj] = useState({
     todayDate: null,
-    // date: null,
     months: moment.months(),
     selectadDate: null,
     changedMonth: null,
     changedYear: null,
-    // selectedMonth: null,
-    // selectedYear: null,
-    // selectadDate: null,
-    // disableMonthChange: false,
-    // disableMonthSelect: false,
     dataInfo: [
       {
         id: 1,
@@ -39,44 +32,21 @@ const HomeScreen = () => {
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = moment(currentDate).format('YYYY-MM-DD');
-    // console.log('formattedDate------>', formattedDate);
-    // let month = moment(currentDate).format('MMMM');
-    // let year = moment(currentDate).format('YYYY');
-    // let date = moment(currentDate).format('DD');
     setCommObj(prev => ({
       ...prev,
       todayDate: formattedDate,
-      // date: formattedDate,
-      // selectedMonth: month,
-      // selectedYear: year,
       selectadDate: formattedDate,
       changedMonth: moment(formattedDate).format('MMMM YYYY'),
       changedYear: moment(formattedDate).format('YYYY'),
     }));
   }, []);
 
-  useEffect(() => {
-    if (commObj.selectedMonth) {
-      setCommObj(prev => ({
-        ...prev,
-        date: `${commObj.selectedYear}-${moment()
-          .month(commObj.selectedMonth)
-          .format('MM')}-${commObj.selectadDate}`,
-      }));
-    }
-
-    // if (commObj.selectedYear < moment(commObj.todayDate).format('YYYY')) {
-    //   setCommObj(prev => ({
-    //     ...prev,
-    //     disableMonthSelect: true,
-    //   }));
-    // } else {
-    //   setCommObj(prev => ({
-    //     ...prev,
-    //     disableMonthSelect: false,
-    //   }));
-    // }
-  }, [commObj.selectedMonth]);
+  const leaveApplyHandler = date => {
+    console.log('date---->', date);
+    customNavigation.navigate('toptab', {
+      date: date,
+    });
+  };
 
   // const updateHandler = () => {
   //   if (
@@ -96,26 +66,26 @@ const HomeScreen = () => {
   //   }
   // };
 
-  const leaveApplyHandler = (day, data) => {
-    const selectedMonth = moment().month(commObj.selectedMonth).format('MM');
-    const selectadDate = day;
-    const endMonth = moment().month('March').format('MM');
-    const selectedYear = commObj.selectedYear;
-    const currentYear = moment(commObj.todayDate).format('YYYY');
-    if (
-      (selectedMonth == endMonth && selectadDate > 31) ||
-      (currentYear == selectedYear && selectedMonth > endMonth) ||
-      (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
-    ) {
-      console.log('yes');
-      customNavigation.navigate('toptab', {
-        date: data,
-      });
-    } else {
-      console.log('No');
-      Alert.alert('This is not current financial year....');
-    }
-  };
+  // const leaveApplyHandler = (day, data) => {
+  //   const selectedMonth = moment().month(commObj.selectedMonth).format('MM');
+  //   const selectadDate = day;
+  //   const endMonth = moment().month('March').format('MM');
+  //   const selectedYear = commObj.selectedYear;
+  //   const currentYear = moment(commObj.todayDate).format('YYYY');
+  //   if (
+  //     (selectedMonth == endMonth && selectadDate > 31) ||
+  //     (currentYear == selectedYear && selectedMonth > endMonth) ||
+  //     (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
+  //   ) {
+  //     console.log('yes');
+  // customNavigation.navigate('toptab', {
+  //   date: data,
+  // });
+  //   } else {
+  //     console.log('No');
+  //     Alert.alert('This is not current financial year....');
+  //   }
+  // };
 
   useEffect(() => {
     console.log('Home-commObj------->', commObj);
@@ -136,6 +106,8 @@ const HomeScreen = () => {
           }}>
           <Calendar
             initialDate={commObj.selectadDate}
+            minDate="2023-04-01"
+            maxDate="2024-03-31"
             markingType="period"
             markedDates={{}}
             dayComponent={({date, state}) => {
@@ -146,7 +118,7 @@ const HomeScreen = () => {
                       ...prev,
                       selectadDate: date.dateString,
                     }));
-                    // leaveApplyHandler(date.day, date);
+                    leaveApplyHandler(date);
                   }}>
                   <View
                     style={{
@@ -201,20 +173,12 @@ const HomeScreen = () => {
             }
             enableSwipeMonths={true}
             onMonthChange={month => {
-              console.log(month);
               setCommObj(prev => ({
                 ...prev,
                 selectadDate: month.dateString,
                 changedMonth: moment(month.dateString).format('MMMM YYYY'),
                 changedYear: moment(month.dateString).format('YYYY'),
-                // date: month.dateString,
-                // selectedYear: month.year,
-                // selectadDate: month.day,
-                // selectedMonth: moment()
-                //   .month(month.month - 1)
-                //   .format('MMMM'),
               }));
-              // updateHandler();
             }}
             renderHeader={() => {
               return (
@@ -345,12 +309,6 @@ const HomeScreen = () => {
                     </View>
                     <TouchableWithoutFeedback
                       onPress={() => {
-                        // if (commObj.disableMonthChange) {
-                        // setCommObj(prev => ({
-                        //   ...prev,
-                        //   selectedYear: prev.selectedYear + 1,
-                        // }));
-                        // }
                         setCommObj(prev => ({
                           ...prev,
                           changedYear: Number(prev.changedYear) + 1,
@@ -360,11 +318,6 @@ const HomeScreen = () => {
                         <Icon
                           name="angle-right"
                           size={20}
-                          // color={
-                          //   new Date().getFullYear() > commObj.selectedYear
-                          //     ? 'gray'
-                          //     : 'lightgray'
-                          // }
                           color={'gray'}
                           style={{
                             paddingHorizontal: 10,
@@ -389,14 +342,12 @@ const HomeScreen = () => {
                             let date = `${commObj.changedYear}-${moment()
                               .month(item)
                               .format('MM')}-01`;
-                            console.log(typeof date);
                             setCommObj(prev => ({
                               ...prev,
                               changedMonth: `${item} ${commObj.changedYear}`,
                               selectadDate: date,
                             }));
                             setModalVisible(false);
-                            // updateHandler();
                           }}>
                           <View
                             style={{
