@@ -9,8 +9,10 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 const TopTabNav = props => {
+  const customNavigation = useNavigation();
   const [commObj, setCommObj] = useState({
     fromDate: new Date(props.route.params.date),
     toDate: new Date(props.route.params.date),
@@ -20,12 +22,19 @@ const TopTabNav = props => {
   });
 
   const applyLeaveHandler = async () => {
-    let obj = {
-      fromDate: moment(commObj.fromDate).format('YYYY-MM-DD'),
-      toDate: moment(commObj.toDate).format('YYYY-MM-DD'),
-      reason: commObj.reason,
-    };
-    await AsyncStorage.setItem('apply-leave', JSON.stringify(obj));
+    let array = [
+      {
+        fromDate: moment(commObj.fromDate).format('YYYY-MM-DD'),
+        toDate: moment(commObj.toDate).format('YYYY-MM-DD'),
+        reason: commObj.reason,
+      },
+    ];
+    await AsyncStorage.setItem('apply-leave', JSON.stringify(array));
+    setCommObj(prev => ({
+      ...prev,
+      reason: '',
+    }));
+    customNavigation.goBack();
   };
   useEffect(() => {
     console.log('TopTabNav commObj-------->', commObj);

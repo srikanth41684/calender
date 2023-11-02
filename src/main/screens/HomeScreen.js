@@ -10,6 +10,7 @@ import {Calendar} from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment/moment';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
   const customNavigation = useNavigation();
@@ -39,7 +40,14 @@ const HomeScreen = () => {
       changedMonth: moment(formattedDate).format('MMMM YYYY'),
       changedYear: moment(formattedDate).format('YYYY'),
     }));
+    leaveDataHanlder();
   }, []);
+
+  const leaveDataHanlder = async () => {
+    console.log('leave');
+    let leaveData = await AsyncStorage.getItem('apply-leave');
+    console.log('leaveData---------->', JSON.parse(leaveData));
+  };
 
   const leaveApplyHandler = date => {
     console.log('date---->', date);
