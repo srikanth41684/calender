@@ -8,15 +8,25 @@ import {
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TopTabNav = props => {
   const [commObj, setCommObj] = useState({
     fromDate: new Date(props.route.params.date),
-    toDate: new Date(),
-    reason: null,
+    toDate: new Date(props.route.params.date),
+    reason: '',
     formDatePicker: false,
     toDatePicker: false,
   });
+
+  const applyLeaveHandler = async () => {
+    let obj = {
+      fromDate: moment(commObj.fromDate).format('YYYY-MM-DD'),
+      toDate: moment(commObj.toDate).format('YYYY-MM-DD'),
+      reason: commObj.reason,
+    };
+    await AsyncStorage.setItem('apply-leave', JSON.stringify(obj));
+  };
   useEffect(() => {
     console.log('TopTabNav commObj-------->', commObj);
   }, [commObj]);
@@ -145,12 +155,17 @@ const TopTabNav = props => {
             />
           </View>
         </View>
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            if (commObj.reason !== '') {
+              applyLeaveHandler();
+            }
+          }}>
           <View
             style={{
               paddingVertical: 10,
               alignItems: 'center',
-              backgroundColor: 'blue',
+              backgroundColor: commObj.reason !== '' ? 'blue' : 'lightblue',
               borderRadius: 8,
             }}>
             <Text
