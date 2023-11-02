@@ -121,6 +121,25 @@ const HomeScreen = () => {
             minDate="2023-04-01"
             maxDate="2024-03-31"
             dayComponent={({date, state}) => {
+              let marked = false;
+              let start = false;
+              let end = false;
+              if (commObj.dataInfo) {
+                commObj.dataInfo.forEach(item => {
+                  if (
+                    item.fromDate <= date.dateString &&
+                    date.dateString <= item.toDate
+                  ) {
+                    marked = true;
+                  }
+                  if (item.fromDate === date.dateString) {
+                    start = true;
+                  }
+                  if (item.toDate === date.dateString) {
+                    end = true;
+                  }
+                });
+              }
               return (
                 <TouchableWithoutFeedback
                   onPress={() => {
@@ -134,11 +153,11 @@ const HomeScreen = () => {
                     style={{
                       width: '100%',
                       height: 30,
-                      backgroundColor:
-                        commObj.arrays.fromDate <= date.dateString &&
-                        date.dateString <= commObj.arrays.toDate
-                          ? 'lightblue'
-                          : '',
+                      backgroundColor: marked ? 'lightblue' : '',
+                      borderTopLeftRadius: start ? 50 : 0,
+                      borderBottomLeftRadius: start ? 50 : 0,
+                      borderTopRightRadius: end ? 50 : 0,
+                      borderBottomRightRadius: end ? 50 : 0,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
