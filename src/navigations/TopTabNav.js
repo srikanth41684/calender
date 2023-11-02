@@ -29,6 +29,13 @@ const TopTabNav = props => {
         reason: commObj.reason,
       },
     ];
+    let leaveData = await AsyncStorage.getItem('apply-leave');
+    let data = JSON.parse(leaveData);
+    if (data) {
+      data.forEach(item => {
+        array.push(item);
+      });
+    }
     await AsyncStorage.setItem('apply-leave', JSON.stringify(array));
     setCommObj(prev => ({
       ...prev,

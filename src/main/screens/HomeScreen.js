@@ -21,12 +21,7 @@ const HomeScreen = () => {
     selectadDate: null,
     changedMonth: null,
     changedYear: null,
-    dataInfo: [
-      {
-        id: 1,
-        titile: 'Selected date',
-      },
-    ],
+    dataInfo: null,
   });
 
   // initially select today's date
@@ -44,10 +39,27 @@ const HomeScreen = () => {
   }, []);
 
   const leaveDataHanlder = async () => {
-    console.log('leave');
     let leaveData = await AsyncStorage.getItem('apply-leave');
-    console.log('leaveData---------->', JSON.parse(leaveData));
+    let data = JSON.parse(leaveData);
+    console.log(data);
+    // if (data) {
+    //   let datesArray = [];
+    //   data.forEach(item => {
+    //     let startDate = moment(item.fromDate);
+    //     let endDate = moment(item.toDate);
+    //     while (startDate.isSameOrBefore(endDate)) {
+    //       datesArray.push(startDate.format('YYYY-MM-DD'));
+    //       startDate.add(1, 'days');
+    //     }
+    //   });
+    //   setCommObj(prev => ({
+    //     ...prev,
+    //     markDates: datesArray,
+    //   }));
+    // }
   };
+
+  const markedDates = {};
 
   const leaveApplyHandler = date => {
     console.log('date---->', date);
@@ -117,7 +129,7 @@ const HomeScreen = () => {
             minDate="2023-04-01"
             maxDate="2024-03-31"
             markingType="period"
-            markedDates={{}}
+            markedDates={markedDates}
             dayComponent={({date, state}) => {
               return (
                 <TouchableWithoutFeedback
@@ -223,7 +235,7 @@ const HomeScreen = () => {
           style={{
             paddingTop: 50,
           }}>
-          {commObj.dataInfo &&
+          {/* {commObj.dataInfo &&
             commObj.dataInfo.map((item, index) => {
               return (
                 <View key={index} style={{}}>
@@ -241,7 +253,7 @@ const HomeScreen = () => {
                   </Text>
                 </View>
               );
-            })}
+            })} */}
         </View>
         <Modal
           animationType="fade"
