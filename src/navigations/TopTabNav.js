@@ -12,8 +12,10 @@ import DatePicker from 'react-native-date-picker';
 const TopTabNav = props => {
   const [commObj, setCommObj] = useState({
     fromDate: new Date(props.route.params.date),
-    toDate: moment(new Date()).format('YYYY-MM-DD'),
+    toDate: new Date(),
     reason: null,
+    formDatePicker: false,
+    toDatePicker: false,
   });
   useEffect(() => {
     console.log('TopTabNav commObj-------->', commObj);
@@ -50,52 +52,68 @@ const TopTabNav = props => {
               Apply Leave
             </Text>
           </View>
-          <View
-            style={{
-              borderWidth: 0.5,
-              borderColor: 'blue',
-              borderRadius: 8,
-              paddingLeft: 10,
-              paddingVertical: 5,
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setCommObj(prev => ({
+                ...prev,
+                formDatePicker: true,
+              }));
             }}>
-            <Text
+            <View
               style={{
-                fontSize: 12,
-                color: '#777777',
+                borderWidth: 0.5,
+                borderColor: 'blue',
+                borderRadius: 8,
+                paddingLeft: 10,
+                paddingVertical: 5,
               }}>
-              Start Date :
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000000',
-              }}>
-              {moment(commObj.fromDate).format('MMMM DD, YYYY')}
-            </Text>
-          </View>
-          <View
-            style={{
-              borderWidth: 0.5,
-              borderColor: 'blue',
-              borderRadius: 8,
-              paddingLeft: 10,
-              paddingVertical: 5,
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: '#777777',
+                }}>
+                Start Date :
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#000000',
+                }}>
+                {moment(commObj.fromDate).format('MMMM DD, YYYY')}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setCommObj(prev => ({
+                ...prev,
+                toDatePicker: true,
+              }));
             }}>
-            <Text
+            <View
               style={{
-                fontSize: 12,
-                color: '#777777',
+                borderWidth: 0.5,
+                borderColor: 'blue',
+                borderRadius: 8,
+                paddingLeft: 10,
+                paddingVertical: 5,
               }}>
-              End Date :
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000000',
-              }}>
-              {moment(commObj.toDate).format('MMMM DD, YYYY')}
-            </Text>
-          </View>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: '#777777',
+                }}>
+                End Date :
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#000000',
+                }}>
+                {moment(commObj.toDate).format('MMMM DD, YYYY')}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
           <View>
             <Text
               style={{
@@ -145,6 +163,44 @@ const TopTabNav = props => {
             </Text>
           </View>
         </TouchableWithoutFeedback>
+        <DatePicker
+          modal
+          mode="date"
+          date={commObj.fromDate}
+          open={commObj.formDatePicker}
+          onConfirm={date => {
+            setCommObj(prev => ({
+              ...prev,
+              fromDate: date,
+              formDatePicker: false,
+            }));
+          }}
+          onCancel={() => {
+            setCommObj(prev => ({
+              ...prev,
+              formDatePicker: false,
+            }));
+          }}
+        />
+        <DatePicker
+          modal
+          mode="date"
+          date={commObj.toDate}
+          open={commObj.toDatePicker}
+          onConfirm={date => {
+            setCommObj(prev => ({
+              ...prev,
+              toDate: date,
+              toDatePicker: false,
+            }));
+          }}
+          onCancel={() => {
+            setCommObj(prev => ({
+              ...prev,
+              toDatePicker: false,
+            }));
+          }}
+        />
       </View>
     </SafeAreaView>
   );
