@@ -41,22 +41,10 @@ const HomeScreen = () => {
   const leaveDataHanlder = async () => {
     let leaveData = await AsyncStorage.getItem('apply-leave');
     let data = JSON.parse(leaveData);
-    console.log(data);
-    // if (data) {
-    //   let datesArray = [];
-    //   data.forEach(item => {
-    //     let startDate = moment(item.fromDate);
-    //     let endDate = moment(item.toDate);
-    //     while (startDate.isSameOrBefore(endDate)) {
-    //       datesArray.push(startDate.format('YYYY-MM-DD'));
-    //       startDate.add(1, 'days');
-    //     }
-    //   });
-    //   setCommObj(prev => ({
-    //     ...prev,
-    //     markDates: datesArray,
-    //   }));
-    // }
+    setCommObj(prev => ({
+      ...prev,
+      dataInfo: data,
+    }));
   };
 
   const markedDates = {};
@@ -235,25 +223,29 @@ const HomeScreen = () => {
           style={{
             paddingTop: 50,
           }}>
-          {/* {commObj.dataInfo &&
+          {commObj.dataInfo &&
             commObj.dataInfo.map((item, index) => {
               return (
-                <View key={index} style={{}}>
+                <View
+                  key={index}
+                  style={{
+                    paddingVertical: 10,
+                  }}>
                   <Text
                     style={{
                       color: '#000000',
                     }}>
-                    {item.titile}
+                    {item.reason}
                   </Text>
                   <Text
                     style={{
                       color: '#000000',
                     }}>
-                    {commObj.selectadDate}
+                    {item.fromDate} to {item.toDate}
                   </Text>
                 </View>
               );
-            })} */}
+            })}
         </View>
         <Modal
           animationType="fade"
