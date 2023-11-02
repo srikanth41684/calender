@@ -17,13 +17,16 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [commObj, setCommObj] = useState({
     todayDate: null,
-    date: null,
+    // date: null,
     months: moment.months(),
-    selectedMonth: null,
-    selectedYear: null,
     selectadDate: null,
-    disableMonthChange: false,
-    disableMonthSelect: false,
+    changedMonth: null,
+    changedYear: null,
+    // selectedMonth: null,
+    // selectedYear: null,
+    // selectadDate: null,
+    // disableMonthChange: false,
+    // disableMonthSelect: false,
     dataInfo: [
       {
         id: 1,
@@ -32,19 +35,23 @@ const HomeScreen = () => {
     ],
   });
 
+  // initially select today's date
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = moment(currentDate).format('YYYY-MM-DD');
-    let month = moment(currentDate).format('MMMM');
-    let year = moment(currentDate).format('YYYY');
-    let date = moment(currentDate).format('DD');
+    // console.log('formattedDate------>', formattedDate);
+    // let month = moment(currentDate).format('MMMM');
+    // let year = moment(currentDate).format('YYYY');
+    // let date = moment(currentDate).format('DD');
     setCommObj(prev => ({
       ...prev,
       todayDate: formattedDate,
-      date: formattedDate,
-      selectedMonth: month,
-      selectedYear: year,
-      selectadDate: date,
+      // date: formattedDate,
+      // selectedMonth: month,
+      // selectedYear: year,
+      selectadDate: formattedDate,
+      changedMonth: moment(formattedDate).format('MMMM YYYY'),
+      changedYear: moment(formattedDate).format('YYYY'),
     }));
   }, []);
 
@@ -71,23 +78,23 @@ const HomeScreen = () => {
     // }
   }, [commObj.selectedMonth]);
 
-  const updateHandler = () => {
-    if (
-      moment(commObj.date).format('MM') <
-        moment(commObj.todayDate).format('MM') ||
-      commObj.selectedYear < moment(commObj.todayDate).format('YYYY')
-    ) {
-      setCommObj(prev => ({
-        ...prev,
-        disableMonthChange: true,
-      }));
-    } else {
-      setCommObj(prev => ({
-        ...prev,
-        disableMonthChange: false,
-      }));
-    }
-  };
+  // const updateHandler = () => {
+  //   if (
+  //     moment(commObj.date).format('MM') <
+  //       moment(commObj.todayDate).format('MM') ||
+  //     commObj.selectedYear < moment(commObj.todayDate).format('YYYY')
+  //   ) {
+  //     setCommObj(prev => ({
+  //       ...prev,
+  //       disableMonthChange: true,
+  //     }));
+  //   } else {
+  //     setCommObj(prev => ({
+  //       ...prev,
+  //       disableMonthChange: false,
+  //     }));
+  //   }
+  // };
 
   const leaveApplyHandler = (day, data) => {
     const selectedMonth = moment().month(commObj.selectedMonth).format('MM');
@@ -110,15 +117,8 @@ const HomeScreen = () => {
     }
   };
 
-  const markedDates = {
-    '2023-11-04': {disabled: true},
-    '2023-11-05': {disabled: true},
-    '2023-11-11': {disabled: true},
-    '2023-11-12': {disabled: true},
-  };
-
   useEffect(() => {
-    console.log('Home-commObj------->', moment().format('ddd'));
+    console.log('Home-commObj------->', commObj);
   }, [commObj]);
   return (
     <SafeAreaView
@@ -135,7 +135,7 @@ const HomeScreen = () => {
             paddingTop: 30,
           }}>
           <Calendar
-            initialDate={commObj.date}
+            initialDate={commObj.selectadDate}
             markingType="period"
             markedDates={{}}
             dayComponent={({date, state}) => {
@@ -144,9 +144,9 @@ const HomeScreen = () => {
                   onPress={() => {
                     setCommObj(prev => ({
                       ...prev,
-                      date: date.dateString,
+                      selectadDate: date.dateString,
                     }));
-                    leaveApplyHandler(date.day, date);
+                    // leaveApplyHandler(date.day, date);
                   }}>
                   <View
                     style={{
@@ -176,17 +176,6 @@ const HomeScreen = () => {
             }}
             style={{}}
             theme={{}}
-            // onDayPress={day => {
-            //   setCommObj(prev => ({
-            //     ...prev,
-            //     date: day.dateString,
-            //   }));
-            //   leaveApplyHandler(day.day, day);
-            //   // customNavigation.navigate('toptab', {
-            //   //   date: day,
-            //   // });
-            // }}
-            // maxDate={commObj.todayDate}
             renderArrow={direction =>
               direction === 'left' ? (
                 <Icon
@@ -202,7 +191,6 @@ const HomeScreen = () => {
                 <Icon
                   name="angle-right"
                   size={30}
-                  // color={commObj.disableMonthChange ? 'gray' : 'lightgray'}
                   color={'gray'}
                   style={{
                     paddingHorizontal: 10,
@@ -211,18 +199,20 @@ const HomeScreen = () => {
                 />
               )
             }
-            // disableArrowRight={commObj.disableMonthChange ? false : true}
-            // enableSwipeMonths={commObj.disableMonthChange ? true : false}
             enableSwipeMonths={true}
             onMonthChange={month => {
+              console.log(month);
               setCommObj(prev => ({
                 ...prev,
-                date: month.dateString,
-                selectedYear: month.year,
-                selectadDate: month.day,
-                selectedMonth: moment()
-                  .month(month.month - 1)
-                  .format('MMMM'),
+                selectadDate: month.dateString,
+                changedMonth: moment(month.dateString).format('MMMM YYYY'),
+                changedYear: moment(month.dateString).format('YYYY'),
+                // date: month.dateString,
+                // selectedYear: month.year,
+                // selectadDate: month.day,
+                // selectedMonth: moment()
+                //   .month(month.month - 1)
+                //   .format('MMMM'),
               }));
               // updateHandler();
             }}
@@ -248,7 +238,7 @@ const HomeScreen = () => {
                           lineHeight: 23,
                           fontWeight: 'bold',
                         }}>
-                        {commObj.selectedMonth} {commObj.selectedYear}
+                        {commObj.changedMonth}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -275,7 +265,7 @@ const HomeScreen = () => {
                     style={{
                       color: '#000000',
                     }}>
-                    {commObj.date}
+                    {commObj.selectadDate}
                   </Text>
                 </View>
               );
@@ -291,6 +281,10 @@ const HomeScreen = () => {
           <TouchableWithoutFeedback
             onPress={() => {
               setModalVisible(!modalVisible);
+              setCommObj(prev => ({
+                ...prev,
+                changedYear: moment(commObj.selectadDate).format('YYYY'),
+              }));
             }}>
             <View
               style={{
@@ -325,7 +319,7 @@ const HomeScreen = () => {
                       onPress={() => {
                         setCommObj(prev => ({
                           ...prev,
-                          selectedYear: prev.selectedYear - 1,
+                          changedYear: prev.changedYear - 1,
                         }));
                       }}>
                       <View>
@@ -346,7 +340,7 @@ const HomeScreen = () => {
                           lineHeight: 25,
                           color: '#000',
                         }}>
-                        {commObj.selectedYear}
+                        {commObj.changedYear}
                       </Text>
                     </View>
                     <TouchableWithoutFeedback
@@ -359,7 +353,7 @@ const HomeScreen = () => {
                         // }
                         setCommObj(prev => ({
                           ...prev,
-                          selectedYear: prev.selectedYear + 1,
+                          changedYear: Number(prev.changedYear) + 1,
                         }));
                       }}>
                       <View>
@@ -392,20 +386,14 @@ const HomeScreen = () => {
                         <TouchableWithoutFeedback
                           key={index}
                           onPress={() => {
-                            // if (
-                            //   commObj.disableMonthSelect ||
-                            //   index < moment(commObj.todayDate).format('MM')
-                            // ) {
-                            //   setCommObj(prev => ({
-                            //     ...prev,
-                            //     selectedMonth: item,
-                            //   }));
-                            //   setModalVisible(false);
-                            //   updateHandler();
-                            // }
+                            let date = `${commObj.changedYear}-${moment()
+                              .month(item)
+                              .format('MM')}-01`;
+                            console.log(typeof date);
                             setCommObj(prev => ({
                               ...prev,
-                              selectedMonth: item,
+                              changedMonth: `${item} ${commObj.changedYear}`,
+                              selectadDate: date,
                             }));
                             setModalVisible(false);
                             // updateHandler();
@@ -416,18 +404,14 @@ const HomeScreen = () => {
                               alignItems: 'center',
                               paddingVertical: 10,
                               backgroundColor:
-                                commObj.selectedMonth === item
+                                commObj.changedMonth &&
+                                commObj.changedMonth.split(' ')[0] === item
                                   ? 'lightblue'
                                   : '#fff',
                               borderRadius: 4,
                             }}>
                             <Text
                               style={{
-                                // color:
-                                //   commObj.disableMonthSelect ||
-                                //   index < moment(commObj.todayDate).format('MM')
-                                //     ? '#000000'
-                                //     : 'lightgray',
                                 color: '#000000',
                                 fontSize: 14,
                               }}>
