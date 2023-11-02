@@ -44,7 +44,7 @@ const HomeScreen = () => {
   const leaveApplyHandler = date => {
     console.log('date---->', date);
     customNavigation.navigate('toptab', {
-      date: date,
+      date: date.dateString,
     });
   };
 
