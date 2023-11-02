@@ -19,6 +19,7 @@ const TopTabNav = props => {
     reason: '',
     formDatePicker: false,
     toDatePicker: false,
+    numberOfDays: 1,
   });
 
   const applyLeaveHandler = async () => {
@@ -43,6 +44,39 @@ const TopTabNav = props => {
     }));
     customNavigation.goBack();
   };
+
+  useEffect(() => {
+    let startDateStr = moment(commObj.fromDate).format('YYYY-MM-DD');
+    let endDateStr = moment(commObj.toDate).format('YYYY-MM-DD');
+
+    const startDate = moment(startDateStr);
+    const endDate = moment(endDateStr);
+
+    const daysBetween = endDate.diff(startDate, 'days');
+
+    const middleDates = [];
+    for (let i = 1; i < daysBetween; i++) {
+      middleDates.push(startDate.clone().add(i, 'days').format('YYYY-MM-DD'));
+    }
+
+    let tempArr = [];
+
+    if (middleDates) {
+      middleDates.forEach(item => {
+        if (
+          moment(item).format('ddd') !== 'Sun' &&
+          moment(item).format('ddd') !== 'Sat'
+        ) {
+          tempArr.push(item);
+        }
+      });
+    }
+    console.log(tempArr);
+    setCommObj(prev => ({
+      ...prev,
+      numberOfDays: tempArr.length,
+    }));
+  }, [commObj.fromDate, commObj.toDate]);
   useEffect(() => {
     console.log('TopTabNav commObj-------->', commObj);
   }, [commObj]);
@@ -169,6 +203,28 @@ const TopTabNav = props => {
                 }));
               }}
             />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingLeft: 5,
+            }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: '#777777',
+              }}>
+              Number of Days:{' '}
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: '#000',
+              }}>
+              {commObj.numberOfDays}
+            </Text>
           </View>
         </View>
         <TouchableWithoutFeedback
