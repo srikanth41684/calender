@@ -22,6 +22,12 @@ const HomeScreen = () => {
     changedMonth: null,
     changedYear: null,
     dataInfo: null,
+    markedDates: {},
+    arrays: {
+      fromDate: '2023-11-06',
+      toDate: '2023-11-10',
+      reason: 'I am taking 5 days of leave.',
+    },
   });
 
   // initially select today's date
@@ -46,8 +52,6 @@ const HomeScreen = () => {
       dataInfo: data,
     }));
   };
-
-  const markedDates = {};
 
   const leaveApplyHandler = date => {
     console.log('date---->', date);
@@ -116,8 +120,6 @@ const HomeScreen = () => {
             initialDate={commObj.selectadDate}
             minDate="2023-04-01"
             maxDate="2024-03-31"
-            markingType="period"
-            markedDates={markedDates}
             dayComponent={({date, state}) => {
               return (
                 <TouchableWithoutFeedback
@@ -130,7 +132,15 @@ const HomeScreen = () => {
                   }}>
                   <View
                     style={{
-                      padding: 5,
+                      width: '100%',
+                      height: 30,
+                      backgroundColor:
+                        commObj.arrays.fromDate <= date.dateString &&
+                        date.dateString <= commObj.arrays.toDate
+                          ? 'lightblue'
+                          : '',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
                     {moment(date.dateString).format('ddd') === 'Sun' ||
                     moment(date.dateString).format('ddd') === 'Sat' ? (
