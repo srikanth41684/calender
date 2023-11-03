@@ -214,9 +214,11 @@ const TopTabNav = props => {
                 borderWidth: 0.5,
                 borderColor: 'blue',
                 borderRadius: 8,
+                color: '#000',
                 paddingLeft: 10,
               }}
               placeholder="Enter reason for a Leave"
+              placeholderTextColor="#777777"
               onChangeText={text => {
                 setCommObj(prev => ({
                   ...prev,
@@ -276,6 +278,7 @@ const TopTabNav = props => {
           mode="date"
           date={commObj.fromDate}
           open={commObj.formDatePicker}
+          title="Select Start Date"
           onConfirm={date => {
             setCommObj(prev => ({
               ...prev,
@@ -293,6 +296,7 @@ const TopTabNav = props => {
         <DatePicker
           modal
           mode="date"
+          title="Select End Date"
           date={commObj.toDate}
           open={commObj.toDatePicker}
           onConfirm={date => {
