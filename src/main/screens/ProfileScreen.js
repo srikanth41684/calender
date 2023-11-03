@@ -1,16 +1,34 @@
-import {View, Text, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Modal,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Calendar} from 'react-native-calendars';
 
 const ProfileScreen = () => {
   const [commObj, setCommObj] = useState({
     dateWeeks: [],
     selectedDate: moment().format('YYYY-MM-DD'),
+    openCalender: false,
+    selectadDate: null,
   });
 
   useEffect(() => {
     getWeeksDatesHandler();
+  }, []);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = moment(currentDate).format('YYYY-MM-DD');
+    setCommObj(prev => ({
+      ...prev,
+      selectadDate: formattedDate,
+    }));
   }, []);
 
   function getWeeksDatesHandler() {
@@ -60,6 +78,22 @@ const ProfileScreen = () => {
     setCommObj(prev => ({
       ...prev,
       dateWeeks: weekData,
+    }));
+  };
+
+  const dateChangeHandler = date => {
+    let currentDate = moment(date);
+    let weekArr = [];
+    for (let i = 0; i < 7; i++) {
+      let day = currentDate.clone().day(i);
+      weekArr.push({
+        date: day.format('YYYY-MM-DD'),
+      });
+    }
+    setCommObj(prev => ({
+      ...prev,
+      dateWeeks: weekArr,
+      openCalender: false,
     }));
   };
 
@@ -123,21 +157,29 @@ const ProfileScreen = () => {
                   />
                 </View>
               </TouchableWithoutFeedback>
-              <View
-                style={{
-                  alignItems: 'center',
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setCommObj(prev => ({
+                    ...prev,
+                    openCalender: true,
+                  }));
                 }}>
-                <Text
+                <View
                   style={{
-                    fontSize: 18,
-                    lineHeight: 25,
-                    fontWeight: 'bold',
-                    color: '#000000',
+                    alignItems: 'center',
                   }}>
-                  {moment(commObj.selectedDate).format('MMMM')}{' '}
-                  {moment(commObj.selectedDate).year()}
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      lineHeight: 25,
+                      fontWeight: 'bold',
+                      color: '#000000',
+                    }}>
+                    {moment(commObj.selectedDate).format('MMMM')}{' '}
+                    {moment(commObj.selectedDate).year()}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
                 onPress={() => {
                   rightHandler();
@@ -221,6 +263,56 @@ const ProfileScreen = () => {
             </Text>
           </View>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={commObj.openCalender}
+          onRequestClose={() => {
+            setModalVisible(false);
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setCommObj(prev => ({
+                ...prev,
+                openCalender: false,
+              }));
+            }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 20,
+                backgroundColor: 'rgba(0,0,0,0.4)',
+              }}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setCommObj(prev => ({
+                    ...prev,
+                    openCalender: true,
+                  }));
+                }}>
+                <View
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    padding: 5,
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                  }}>
+                  <Calendar
+                    initialDate={commObj.selectadDate}
+                    enableSwipeMonths={true}
+                    onDayPress={date => {
+                      dateChangeHandler(date.dateString);
+                    }}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     </SafeAreaView>
   );
