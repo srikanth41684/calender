@@ -37,6 +37,10 @@ const HomeScreen = () => {
         date: '2023-12-06',
         title: 'Holiday3',
       },
+      {
+        date: '2024-01-01',
+        title: 'New Year',
+      },
     ],
     arrays: {
       fromDate: '2023-11-06',
