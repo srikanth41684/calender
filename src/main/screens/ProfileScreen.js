@@ -51,6 +51,7 @@ const ProfileScreen = () => {
     let weekData = [];
     for (let i = 0; i < 7; i++) {
       let day = convertedDate.clone().add(i, 'days');
+      console.log(day);
       weekData.push({
         date: day.format('YYYY-MM-DD'),
       });

@@ -52,17 +52,16 @@ const TopTabNav = props => {
     const startDate = moment(startDateStr);
     const endDate = moment(endDateStr);
 
-    const daysBetween = endDate.diff(startDate, 'days');
-
-    const middleDates = [];
-    for (let i = 1; i < daysBetween; i++) {
-      middleDates.push(startDate.clone().add(i, 'days').format('YYYY-MM-DD'));
+    let allDates = [];
+    let currentDate = startDate.clone();
+    while (currentDate.isSameOrBefore(endDate, 'day')) {
+      allDates.push(currentDate.format('YYYY-MM-DD'));
+      currentDate.add(1, 'day');
     }
 
     let tempArr = [];
-
-    if (middleDates) {
-      middleDates.forEach(item => {
+    if (allDates) {
+      allDates.forEach(item => {
         if (
           moment(item).format('ddd') !== 'Sun' &&
           moment(item).format('ddd') !== 'Sat'
@@ -212,7 +211,7 @@ const TopTabNav = props => {
             }}>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 14,
                 color: '#777777',
               }}>
               Number of Days:{' '}
