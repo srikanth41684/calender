@@ -15,7 +15,7 @@ const ProfileScreen = () => {
     dateWeeks: [],
     selectedDate: moment().format('YYYY-MM-DD'),
     openCalender: false,
-    selectadDate: null,
+    initialDate: null,
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ProfileScreen = () => {
     const formattedDate = moment(currentDate).format('YYYY-MM-DD');
     setCommObj(prev => ({
       ...prev,
-      selectadDate: formattedDate,
+      selectedDate: formattedDate,
     }));
   }, []);
 
@@ -94,6 +94,7 @@ const ProfileScreen = () => {
       ...prev,
       dateWeeks: weekArr,
       openCalender: false,
+      selectedDate: date,
     }));
   };
 
@@ -302,7 +303,7 @@ const ProfileScreen = () => {
                     backgroundColor: '#fff',
                   }}>
                   <Calendar
-                    initialDate={commObj.selectadDate}
+                    initialDate={commObj.selectedDate}
                     enableSwipeMonths={true}
                     onDayPress={date => {
                       dateChangeHandler(date.dateString);
