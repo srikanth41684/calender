@@ -147,6 +147,7 @@ const HomeScreen = () => {
               let marked = false;
               let start = false;
               let end = false;
+              let dd = moment(date.dateString).format('ddd');
               let holiday = false;
               if (commObj.dataInfo) {
                 commObj.dataInfo.forEach(item => {
@@ -178,13 +179,21 @@ const HomeScreen = () => {
                       ...prev,
                       selectadDate: date.dateString,
                     }));
-                    leaveApplyHandler(date);
+                    if (!holiday && dd !== 'Sun' && dd !== 'Sat') {
+                      leaveApplyHandler(date);
+                    }
                   }}>
                   <View
                     style={{
                       width: '100%',
                       height: 30,
-                      backgroundColor: marked ? 'lightblue' : '',
+                      backgroundColor: marked
+                        ? holiday || dd == 'Sun' || dd == 'Sat'
+                          ? ''
+                          : state === 'disabled'
+                          ? ''
+                          : 'lightblue'
+                        : '',
                       borderTopLeftRadius: start ? 50 : 0,
                       borderBottomLeftRadius: start ? 50 : 0,
                       borderTopRightRadius: end ? 50 : 0,
@@ -192,8 +201,7 @@ const HomeScreen = () => {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    {moment(date.dateString).format('ddd') === 'Sun' ||
-                    moment(date.dateString).format('ddd') === 'Sat' ? (
+                    {dd === 'Sun' || dd === 'Sat' ? (
                       <Text
                         style={{
                           textAlign: 'center',
