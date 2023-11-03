@@ -24,6 +24,20 @@ const HomeScreen = () => {
     changedYear: null,
     dataInfo: null,
     markedDates: {},
+    holidaysList: [
+      {
+        date: '2023-11-14',
+        title: 'Holiday1',
+      },
+      {
+        date: '2023-11-27',
+        title: 'Holiday2',
+      },
+      {
+        date: '2023-12-06',
+        title: 'Holiday3',
+      },
+    ],
     arrays: {
       fromDate: '2023-11-06',
       toDate: '2023-11-10',
@@ -128,6 +142,7 @@ const HomeScreen = () => {
               let marked = false;
               let start = false;
               let end = false;
+              let holiday = false;
               if (commObj.dataInfo) {
                 commObj.dataInfo.forEach(item => {
                   if (
@@ -141,6 +156,13 @@ const HomeScreen = () => {
                   }
                   if (item.toDate === date.dateString) {
                     end = true;
+                  }
+                });
+              }
+              if (commObj.holidaysList) {
+                commObj.holidaysList.forEach(item => {
+                  if (item.date === date.dateString) {
+                    holiday = true;
                   }
                 });
               }
@@ -178,7 +200,12 @@ const HomeScreen = () => {
                       <Text
                         style={{
                           textAlign: 'center',
-                          color: state === 'disabled' ? 'lightgray' : 'black',
+                          color:
+                            state === 'disabled'
+                              ? 'lightgray'
+                              : holiday
+                              ? 'red'
+                              : 'black',
                         }}>
                         {date.day}
                       </Text>
