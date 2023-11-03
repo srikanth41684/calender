@@ -9,11 +9,12 @@ import React, {useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment/moment';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
   const customNavigation = useNavigation();
+  const isFocused = useIsFocused();
   const [modalVisible, setModalVisible] = useState(false);
   const [commObj, setCommObj] = useState({
     todayDate: null,
@@ -41,8 +42,11 @@ const HomeScreen = () => {
       changedMonth: moment(formattedDate).format('MMMM YYYY'),
       changedYear: moment(formattedDate).format('YYYY'),
     }));
-    leaveDataHanlder();
   }, []);
+
+  useEffect(() => {
+    isFocused && leaveDataHanlder();
+  }, [isFocused]);
 
   const leaveDataHanlder = async () => {
     let leaveData = await AsyncStorage.getItem('apply-leave');
