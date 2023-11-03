@@ -60,6 +60,14 @@ const TopTabNav = props => {
       currentDate.add(1, 'day');
     }
 
+    // for (
+    //   let currentDate = startDate.clone();
+    //   currentDate.isSameOrBefore(endDate, 'day');
+    //   currentDate.add(1, 'day')
+    // ) {
+    //   allDates.push(currentDate.format('YYYY-MM-DD'));
+    // }
+
     let tempArr = [];
     if (allDates) {
       allDates.forEach(item => {
