@@ -272,6 +272,12 @@ const HomeScreen = () => {
                     }}>
                     {item.fromDate} to {item.toDate}
                   </Text>
+                  <Text
+                    style={{
+                      color: '#000000',
+                    }}>
+                    Number of Days: {item.numberOfDays}
+                  </Text>
                 </View>
               );
             })}

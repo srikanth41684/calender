@@ -28,6 +28,7 @@ const TopTabNav = props => {
         fromDate: moment(commObj.fromDate).format('YYYY-MM-DD'),
         toDate: moment(commObj.toDate).format('YYYY-MM-DD'),
         reason: commObj.reason,
+        numberOfDays: commObj.numberOfDays,
       },
     ];
     let leaveData = await AsyncStorage.getItem('apply-leave');
