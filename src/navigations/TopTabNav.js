@@ -20,6 +20,7 @@ const TopTabNav = props => {
     formDatePicker: false,
     toDatePicker: false,
     numberOfDays: 1,
+    holidaysList: props.route.params.holidaysList,
   });
 
   const applyLeaveHandler = async () => {
@@ -68,18 +69,30 @@ const TopTabNav = props => {
     //   allDates.push(currentDate.format('YYYY-MM-DD'));
     // }
 
-    let tempArr = [];
+    let newArr = [];
     if (allDates) {
       allDates.forEach(item => {
         if (
           moment(item).format('ddd') !== 'Sun' &&
           moment(item).format('ddd') !== 'Sat'
         ) {
-          tempArr.push(item);
+          newArr.push(item);
         }
       });
     }
-    console.log(tempArr);
+
+    let tempArr = [];
+    let dates = [];
+    commObj.holidaysList.forEach(res => {
+      dates.push(res.date);
+    });
+
+    if (newArr) {
+      tempArr = newArr.filter(item => {
+        return !dates.includes(item);
+      });
+    }
+
     setCommObj(prev => ({
       ...prev,
       numberOfDays: tempArr.length,
