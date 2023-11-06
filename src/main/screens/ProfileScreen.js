@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   Modal,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
@@ -115,16 +116,69 @@ const ProfileScreen = () => {
         <View>
           <View
             style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              paddingVertical: 30,
+              paddingVertical: 20,
             }}>
-            <Text
+            <View
               style={{
-                color: '#000',
-                fontSize: 16,
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 10,
               }}>
-              ProfileScreen
-            </Text>
+              <View
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 60 / 2,
+                  backgroundColor: 'lightgray',
+                }}>
+                {/* <Image /> */}
+              </View>
+              <View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#000',
+                      lineHeight: 23,
+                    }}>
+                    Srikanth Usnagiri
+                  </Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: '#777777',
+                      lineHeight: 21,
+                    }}>
+                    Junior Frontend Engineer
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <TouchableWithoutFeedback>
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  width: 40,
+                  height: 40,
+                  borderRadius: 40 / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Icon
+                  name="bell-o"
+                  size={20}
+                  color={'#000'}
+                  style={{
+                    paddingHorizontal: 10,
+                  }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <View
             style={{
