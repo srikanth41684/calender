@@ -113,7 +113,10 @@ const ProfileScreen = () => {
           paddingHorizontal: 15,
           backgroundColor: '#EFF1FE',
         }}>
-        <View>
+        <View
+          style={{
+            flex: 1,
+          }}>
           <View
             style={{
               flexDirection: 'row',
@@ -133,9 +136,7 @@ const ProfileScreen = () => {
                   height: 55,
                   borderRadius: 55 / 2,
                   backgroundColor: 'lightgray',
-                }}>
-                {/* <Image /> */}
-              </View>
+                }}></View>
               <View>
                 <View>
                   <Text
@@ -473,7 +474,30 @@ const ProfileScreen = () => {
             </View>
           </View>
         </View>
-
+        <View
+          style={{
+            paddingBottom: 10,
+          }}>
+          <TouchableWithoutFeedback>
+            <View
+              style={{
+                backgroundColor: '#314ce8',
+                alignItems: 'center',
+                paddingVertical: 10,
+                borderRadius: 8,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  lineHeight: 23,
+                }}>
+                Check In
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
         <Modal
           animationType="fade"
           transparent={true}
