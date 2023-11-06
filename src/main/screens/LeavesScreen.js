@@ -11,6 +11,7 @@ const LeavesScreen = () => {
         style={{
           flex: 1,
           paddingHorizontal: 15,
+          backgroundColor: '#EFF1FE',
         }}>
         <View>
           <Text
@@ -35,22 +36,35 @@ const LeavesScreen = () => {
             <View
               style={{
                 flex: 1,
-                borderColor: '#4fa3f7',
+                borderColor: 'blue',
                 borderWidth: 0.5,
                 backgroundColor: '#dcebfa',
                 padding: 15,
                 borderRadius: 10,
               }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 16,
-                  lineHeight: 23,
-                  color: '#000',
-                  fontWeight: 'bold',
                   paddingBottom: 15,
                 }}>
-                Leave Balance
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Leave
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Balance
+                </Text>
+              </View>
               <Text
                 style={{
                   fontSize: 18,
@@ -70,16 +84,29 @@ const LeavesScreen = () => {
                 padding: 15,
                 borderRadius: 10,
               }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 16,
-                  lineHeight: 23,
-                  color: '#000',
-                  fontWeight: 'bold',
                   paddingBottom: 15,
                 }}>
-                Leave Approved
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Leave
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Approved
+                </Text>
+              </View>
               <Text
                 style={{
                   fontSize: 18,
@@ -105,16 +132,29 @@ const LeavesScreen = () => {
                 padding: 15,
                 borderRadius: 10,
               }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 16,
-                  lineHeight: 23,
-                  color: '#000',
-                  fontWeight: 'bold',
                   paddingBottom: 15,
                 }}>
-                Leave Pending
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Leave
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Pending
+                </Text>
+              </View>
               <Text
                 style={{
                   fontSize: 18,
@@ -134,16 +174,29 @@ const LeavesScreen = () => {
                 padding: 15,
                 borderRadius: 10,
               }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 16,
-                  lineHeight: 23,
-                  color: '#000',
-                  fontWeight: 'bold',
                   paddingBottom: 15,
                 }}>
-                Leave Cancled
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Leave
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 23,
+                    color: '#000',
+                    fontWeight: 'bold',
+                  }}>
+                  Cancelled
+                </Text>
+              </View>
               <Text
                 style={{
                   fontSize: 18,
