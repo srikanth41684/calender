@@ -107,7 +107,7 @@ const ProfileScreen = () => {
       style={{
         flex: 1,
       }}>
-      {/* <View
+      <View
         style={{
           flex: 1,
           paddingHorizontal: 15,
@@ -619,7 +619,7 @@ const ProfileScreen = () => {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 };
