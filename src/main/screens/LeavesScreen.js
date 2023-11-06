@@ -15,8 +15,12 @@ const LeavesScreen = () => {
           flex: 1,
           paddingHorizontal: 15,
           backgroundColor: '#EFF1FE',
+          paddingTop: 20,
         }}>
-        <View>
+        <View
+          style={{
+            paddingVertical: 15,
+          }}>
           <Text
             style={{
               fontSize: 16,
@@ -314,6 +318,7 @@ const LeavesScreen = () => {
                 </View>
               </TouchableWithoutFeedback>
             </View>
+            <View></View>
           </View>
         </View>
         <View
