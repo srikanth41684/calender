@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Feather';
 import {Calendar} from 'react-native-calendars';
 
 const ProfileScreen = () => {
@@ -129,9 +129,9 @@ const ProfileScreen = () => {
               }}>
               <View
                 style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 60 / 2,
+                  width: 55,
+                  height: 55,
+                  borderRadius: 55 / 2,
                   backgroundColor: 'lightgray',
                 }}>
                 {/* <Image /> */}
@@ -170,7 +170,7 @@ const ProfileScreen = () => {
                   justifyContent: 'center',
                 }}>
                 <Icon
-                  name="bell-o"
+                  name="bell"
                   size={20}
                   color={'#000'}
                   style={{
@@ -203,7 +203,7 @@ const ProfileScreen = () => {
                     padding: 10,
                   }}>
                   <Icon
-                    name="angle-left"
+                    name="arrow-left"
                     size={30}
                     color={'gray'}
                     style={{
@@ -244,7 +244,7 @@ const ProfileScreen = () => {
                     padding: 10,
                   }}>
                   <Icon
-                    name="angle-right"
+                    name="arrow-right"
                     size={30}
                     color={'gray'}
                     style={{
@@ -306,16 +306,171 @@ const ProfileScreen = () => {
           </View>
           <View
             style={{
-              paddingTop: 20,
-              paddingLeft: 10,
+              paddingTop: 15,
             }}>
-            <Text
+            <View
               style={{
-                color: '#000',
-                fontSize: 18,
+                paddingVertical: 10,
               }}>
-              {commObj.selectedDate}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  lineHeight: 23,
+                  color: '#000',
+                  fontWeight: 'bold',
+                }}>
+                Today Attendence
+              </Text>
+            </View>
+            <View
+              style={{
+                gap: 20,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  backgroundColor: '#ffffff',
+                  borderRadius: 8,
+                  padding: 15,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: 'lightblue',
+                      paddingVertical: 10,
+                      borderRadius: 10,
+                    }}>
+                    <Icon
+                      name="log-in"
+                      size={15}
+                      color={'blue'}
+                      style={{
+                        paddingHorizontal: 10,
+                      }}
+                    />
+                  </View>
+                  <View style={{}}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 23,
+                        fontWeight: 'bold',
+                        color: '#000',
+                      }}>
+                      Check In
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 21,
+                        color: '#777777',
+                      }}>
+                      Nov 06, 2023
+                    </Text>
+                  </View>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 23,
+                      fontWeight: 'bold',
+                      color: '#000',
+                    }}>
+                    9:24 AM
+                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 21,
+                        color: '#777777',
+                      }}>
+                      On Time
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  backgroundColor: '#ffffff',
+                  borderRadius: 8,
+                  padding: 15,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: 'lightblue',
+                      paddingVertical: 10,
+                      borderRadius: 10,
+                    }}>
+                    <Icon
+                      name="log-out"
+                      size={15}
+                      color={'blue'}
+                      style={{
+                        paddingHorizontal: 10,
+                      }}
+                    />
+                  </View>
+                  <View style={{}}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 23,
+                        fontWeight: 'bold',
+                        color: '#000',
+                      }}>
+                      Check Out
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 21,
+                        color: '#777777',
+                      }}>
+                      Nov 06, 2023
+                    </Text>
+                  </View>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 23,
+                      fontWeight: 'bold',
+                      color: '#000',
+                    }}>
+                    6:46 PM
+                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 21,
+                        color: '#777777',
+                      }}>
+                      Go Home
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
 
