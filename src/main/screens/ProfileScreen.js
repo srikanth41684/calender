@@ -471,6 +471,78 @@ const ProfileScreen = () => {
                   </View>
                 </View>
               </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  backgroundColor: '#ffffff',
+                  borderRadius: 8,
+                  padding: 15,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: 'lightblue',
+                      paddingVertical: 10,
+                      borderRadius: 10,
+                    }}>
+                    <Icon
+                      name="calendar"
+                      size={15}
+                      color={'blue'}
+                      style={{
+                        paddingHorizontal: 10,
+                      }}
+                    />
+                  </View>
+                  <View style={{}}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 23,
+                        fontWeight: 'bold',
+                        color: '#000',
+                      }}>
+                      Total Days
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 21,
+                        color: '#777777',
+                      }}>
+                      Nov 2023
+                    </Text>
+                  </View>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 23,
+                      fontWeight: 'bold',
+                      color: '#000',
+                    }}>
+                    20
+                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 21,
+                        color: '#777777',
+                      }}>
+                      Working Days
+                    </Text>
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
         </View>
