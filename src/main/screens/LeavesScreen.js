@@ -47,9 +47,9 @@ const LeavesScreen = () => {
               <View
                 style={{
                   flex: 1,
-                  borderColor: 'blue',
-                  borderWidth: 0.5,
-                  backgroundColor: '#dcebfa',
+                  borderColor: '#4993fe',
+                  borderWidth: 1,
+                  backgroundColor: '#f5f9ff',
                   padding: 15,
                   borderRadius: 10,
                 }}>
@@ -89,9 +89,9 @@ const LeavesScreen = () => {
               <View
                 style={{
                   flex: 1,
-                  borderColor: '#4fa3f7',
-                  borderWidth: 0.5,
-                  backgroundColor: '#dcebfa',
+                  borderColor: '#aed650',
+                  borderWidth: 1,
+                  backgroundColor: '#fafdf5',
                   padding: 15,
                   borderRadius: 10,
                 }}>
@@ -137,9 +137,9 @@ const LeavesScreen = () => {
               <View
                 style={{
                   flex: 1,
-                  borderColor: '#4fa3f7',
-                  borderWidth: 0.5,
-                  backgroundColor: '#dcebfa',
+                  borderColor: '#49c6be',
+                  borderWidth: 1,
+                  backgroundColor: '#f5fcfb',
                   padding: 15,
                   borderRadius: 10,
                 }}>
@@ -179,9 +179,9 @@ const LeavesScreen = () => {
               <View
                 style={{
                   flex: 1,
-                  borderColor: '#4fa3f7',
-                  borderWidth: 0.5,
-                  backgroundColor: '#dcebfa',
+                  borderColor: '#ff8f84',
+                  borderWidth: 1,
+                  backgroundColor: '#fff9f8',
                   padding: 15,
                   borderRadius: 10,
                 }}>
