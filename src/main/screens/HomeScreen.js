@@ -77,12 +77,10 @@ const HomeScreen = () => {
             moment(commObj.selectadDate).month() + 1 &&
           moment(item.fromDate).year() === moment(commObj.selectadDate).year()
         ) {
-          console.log('leaveItem----->', item);
           arr.push(item);
         }
       });
     }
-    console.log('arr---------->', arr);
     setCommObj(prev => ({
       ...prev,
       dataInfo: arr,
@@ -90,7 +88,6 @@ const HomeScreen = () => {
   };
 
   const leaveApplyHandler = date => {
-    console.log('date---->', date);
     customNavigation.navigate('toptab', {
       date: date.dateString,
       holidaysList: commObj.holidaysList,
@@ -213,12 +210,14 @@ const HomeScreen = () => {
                       ...prev,
                       selectadDate: date.dateString,
                     }));
+                    console.log('date---->', date);
                     if (
                       !holiday &&
                       dd !== 'Sun' &&
                       dd !== 'Sat' &&
                       !marked &&
-                      state !== 'disabled'
+                      state !== 'disabled' &&
+                      commObj.todayDate <= date.dateString
                     ) {
                       leaveApplyHandler(date);
                     }
