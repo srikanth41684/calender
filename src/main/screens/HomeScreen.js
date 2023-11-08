@@ -23,7 +23,7 @@ const HomeScreen = () => {
     changedMonth: null,
     changedYear: null,
     dataInfo: null,
-    markedDates: {},
+    markedDates: null,
     holidaysList: [
       {
         date: '2023-11-14',
@@ -71,6 +71,10 @@ const HomeScreen = () => {
     let data = JSON.parse(leaveData);
     let arr = [];
     if (data) {
+      setCommObj(prev => ({
+        ...prev,
+        markedDates: data,
+      }));
       data.filter(item => {
         if (
           moment(item.fromDate).month() + 1 ===
@@ -81,6 +85,7 @@ const HomeScreen = () => {
         }
       });
     }
+    console.log('month arr ------>', arr);
     setCommObj(prev => ({
       ...prev,
       dataInfo: arr,
@@ -179,8 +184,8 @@ const HomeScreen = () => {
               let end = false;
               let dd = moment(date.dateString).format('ddd');
               let holiday = false;
-              if (commObj.dataInfo) {
-                commObj.dataInfo.forEach(item => {
+              if (commObj.markedDates) {
+                commObj.markedDates.forEach(item => {
                   if (
                     item.fromDate <= date.dateString &&
                     date.dateString <= item.toDate

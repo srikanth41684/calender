@@ -23,6 +23,7 @@ const TopTabNav = props => {
     numberOfDays: 1,
     leaveStartDates: null,
     holidaysList: props.route.params.holidaysList,
+    maxDate: null,
   });
 
   useEffect(() => {
@@ -54,10 +55,10 @@ const TopTabNav = props => {
         numberOfDays: commObj.numberOfDays,
       },
     ];
-    // let leaveData = await AsyncStorage.getItem('apply-leave');
-    // let data = JSON.parse(leaveData);
-    // console.log('data---->', data);
-    if (commObj.leaveStartDates) {
+    let leaveData = await AsyncStorage.getItem('apply-leave');
+    let data = JSON.parse(leaveData);
+    console.log('data---->', data);
+    if (data) {
       data.forEach(item => {
         array.push(item);
       });
@@ -121,6 +122,29 @@ const TopTabNav = props => {
       numberOfDays: tempArr.length,
     }));
   }, [commObj.fromDate, commObj.toDate]);
+
+  useEffect(() => {
+    if (commObj.leaveStartDates) {
+      let myDate = moment(commObj.fromDate).format('YYYY-MM-DD');
+      let leaveDates = commObj.leaveStartDates;
+
+      let closestDate = null;
+
+      for (const dateString of leaveDates) {
+        const currentDate = moment(dateString);
+        if (
+          currentDate.isAfter(myDate) &&
+          (!closestDate || currentDate.isBefore(closestDate))
+        ) {
+          closestDate = currentDate;
+        }
+      }
+      setCommObj(prev => ({
+        ...prev,
+        maxDate: closestDate ? closestDate.format('YYYY-MM-DD') : null,
+      }));
+    }
+  }, [commObj.fromDate, commObj.leaveStartDates]);
   useEffect(() => {
     console.log('TopTabNav commObj-------->', commObj);
   }, [commObj]);
@@ -323,16 +347,15 @@ const TopTabNav = props => {
           <DatePicker
             modal
             mode="date"
-            // maximumDate={
-            //   moment(commObj.fromDate).format('YYYY-MM-DD') <
-            //   commObj.leaveData[0].fromDate
-            //     ? new Date(
-            //         commObj.leaveData[0].fromDate
-            //           .subtract(1, 'days')
-            //           .format('YYYY-MM-DD'),
-            //       )
-            //     : null
-            // }
+            maximumDate={
+              commObj.maxDate
+                ? new Date(
+                    moment(commObj.maxDate)
+                      .subtract(1, 'days')
+                      .format('YYYY-MM-DD'),
+                  )
+                : null
+            }
             title="Select End Date"
             date={commObj.toDate}
             open={commObj.toDatePicker}
