@@ -19,11 +19,11 @@ const BottomTabNav = () => {
         component={ProfileScreen}
         options={{headerShown: false}}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="leaves"
         component={LeavesScreen}
         options={{headerShown: false}}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 };

@@ -253,14 +253,14 @@ const HomeScreen = () => {
               )
             }
             enableSwipeMonths={true}
-            onMonthChange={month => {
-              setCommObj(prev => ({
-                ...prev,
-                selectadDate: month.dateString,
-                changedMonth: moment(month.dateString).format('MMMM YYYY'),
-                changedYear: moment(month.dateString).format('YYYY'),
-              }));
-            }}
+            // onMonthChange={month => {
+            //   setCommObj(prev => ({
+            //     ...prev,
+            //     selectadDate: month.dateString,
+            //     changedMonth: moment(month.dateString).format('MMMM YYYY'),
+            //     changedYear: moment(month.dateString).format('YYYY'),
+            //   }));
+            // }}
             renderHeader={() => {
               return (
                 <View
