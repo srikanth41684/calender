@@ -20,7 +20,6 @@ const TopTabNav = props => {
     formDatePicker: false,
     toDatePicker: false,
     numberOfDays: 1,
-    leaveData: props.route.params.leaves,
     holidaysList: props.route.params.holidaysList,
   });
 
@@ -106,7 +105,7 @@ const TopTabNav = props => {
     }));
   }, [commObj.fromDate, commObj.toDate]);
   useEffect(() => {
-    console.log('TopTabNav commObj-------->', commObj);
+    console.log('TopTabNav commObj-------->', props);
   }, [commObj]);
   return (
     <SafeAreaView

@@ -91,7 +91,6 @@ const HomeScreen = () => {
     customNavigation.navigate('toptab', {
       date: date.dateString,
       holidaysList: commObj.holidaysList,
-      leaves: commObj.dataInfo,
     });
   };
 
