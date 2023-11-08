@@ -119,9 +119,9 @@ const HomeScreen = () => {
 
   // const updateHandler = () => {
   //   if (
-  //     moment(commObj.date).format('MM') <
-  //       moment(commObj.todayDate).format('MM') ||
-  //     commObj.selectedYear < moment(commObj.todayDate).format('YYYY')
+  //    moment(commObj.date).format('MM') <
+  //      moment(commObj.todayDate).format('MM') ||
+  //    commObj.selectedYear < moment(commObj.todayDate).format('YYYY')
   //   ) {
   //     setCommObj(prev => ({
   //       ...prev,
@@ -142,9 +142,9 @@ const HomeScreen = () => {
   //   const selectedYear = commObj.selectedYear;
   //   const currentYear = moment(commObj.todayDate).format('YYYY');
   //   if (
-  //     (selectedMonth == endMonth && selectadDate > 31) ||
-  //     (currentYear == selectedYear && selectedMonth > endMonth) ||
-  //     (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
+  //    (selectedMonth == endMonth && selectadDate > 31) ||
+  //    (currentYear == selectedYear && selectedMonth > endMonth) ||
+  //    (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
   //   ) {
   //     console.log('yes');
   // customNavigation.navigate('toptab', {
@@ -213,7 +213,13 @@ const HomeScreen = () => {
                       ...prev,
                       selectadDate: date.dateString,
                     }));
-                    if (!holiday && dd !== 'Sun' && dd !== 'Sat' && !marked) {
+                    if (
+                      !holiday &&
+                      dd !== 'Sun' &&
+                      dd !== 'Sat' &&
+                      !marked &&
+                      state !== 'disabled'
+                    ) {
                       leaveApplyHandler(date);
                     }
                   }}>
