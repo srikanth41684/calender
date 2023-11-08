@@ -1,9 +1,44 @@
-import {View, Text, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  FlatList,
+} from 'react-native';
 import React, {useState} from 'react';
 
 const LeavesScreen = () => {
   const [commObj, setCommObj] = useState({
     activeLeave: 'upcomig',
+    upcomingLeaves: [
+      {
+        id: 1,
+        startDate: 'Nov 13, 2023',
+        endDate: 'Nov 20, 2023',
+        numberOfDays: '5',
+        balancedLeaves: '16',
+        status: 'approved',
+        by: 'Maneger',
+      },
+      {
+        id: 2,
+        startDate: 'Nov 13, 2023',
+        endDate: 'Nov 20, 2023',
+        numberOfDays: '5',
+        balancedLeaves: '16',
+        status: 'pending',
+        by: 'Maneger',
+      },
+      {
+        id: 3,
+        startDate: 'Nov 13, 2023',
+        endDate: 'Nov 20, 2023',
+        numberOfDays: '5',
+        balancedLeaves: '16',
+        status: 'rejected',
+        by: 'Maneger',
+      },
+    ],
   });
   return (
     <SafeAreaView
@@ -323,6 +358,162 @@ const LeavesScreen = () => {
         </View>
         <View
           style={{
+            flex: 1,
+          }}>
+          {commObj.activeLeave === 'upcomig' && (
+            <FlatList
+              data={commObj.upcomingLeaves}
+              keyExtractor={item => item.id}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                flexGrow: 1,
+                gap: 15,
+                paddingVertical: 15,
+              }}
+              renderItem={({item, index}) => {
+                return (
+                  <View
+                    key={item.id}
+                    style={{
+                      backgroundColor: '#fff',
+                      paddingHorizontal: 15,
+                      paddingVertical: 20,
+                      borderRadius: 8,
+                    }}>
+                    <View
+                      style={{
+                        borderBottomColor: 'lightgray',
+                        borderBottomWidth: 0.5,
+                        paddingBottom: 15,
+                      }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            lineHeight: 23,
+                            color: '#000',
+                          }}>
+                          Date
+                        </Text>
+                        <View
+                          style={{
+                            backgroundColor:
+                              item.status === 'approved'
+                                ? '#fafdf5'
+                                : item.status === 'pending'
+                                ? '#f5fcfb'
+                                : item.status === 'rejected'
+                                ? '#fff9f8'
+                                : '',
+                            padding: 10,
+                            borderRadius: 10,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              color:
+                                item.status === 'approved'
+                                  ? '#aed650'
+                                  : item.status === 'pending'
+                                  ? '#49c6be'
+                                  : item.status === 'rejected'
+                                  ? '#ff8f84'
+                                  : '',
+                              textTransform: 'capitalize',
+                            }}>
+                            {item.status}
+                          </Text>
+                        </View>
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            lineHeight: 23,
+                            color: '#000',
+                            fontWeight: 'bold',
+                          }}>
+                          {item.startDate} - {item.endDate}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        paddingTop: 15,
+                      }}>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            lineHeight: 21,
+                            color: '#000',
+                          }}>
+                          Apply Days
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            lineHeight: 23,
+                            color: '#000',
+                            fontWeight: 'bold',
+                          }}>
+                          {item.numberOfDays}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            lineHeight: 21,
+                            color: '#000',
+                          }}>
+                          Leave Balance
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            lineHeight: 23,
+                            color: '#000',
+                            fontWeight: 'bold',
+                          }}>
+                          {item.balancedLeaves}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            lineHeight: 21,
+                            color: '#000',
+                          }}>
+                          Approved by
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            lineHeight: 23,
+                            color: '#000',
+                            fontWeight: 'bold',
+                          }}>
+                          {item.by}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                );
+              }}
+            />
+          )}
+        </View>
+        {/* <View
+          style={{
             paddingBottom: 10,
           }}>
           <TouchableWithoutFeedback>
@@ -344,7 +535,7 @@ const LeavesScreen = () => {
               </Text>
             </View>
           </TouchableWithoutFeedback>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
