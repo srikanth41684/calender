@@ -215,8 +215,8 @@ const HomeScreen = () => {
                       dd !== 'Sun' &&
                       dd !== 'Sat' &&
                       !marked &&
-                      state !== 'disabled' &&
-                      commObj.todayDate <= date.dateString
+                      state !== 'disabled'
+                      // && commObj.todayDate <= date.dateString
                     ) {
                       leaveApplyHandler(date);
                     }

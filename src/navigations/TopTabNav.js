@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
@@ -20,8 +21,29 @@ const TopTabNav = props => {
     formDatePicker: false,
     toDatePicker: false,
     numberOfDays: 1,
+    leaveStartDates: null,
     holidaysList: props.route.params.holidaysList,
   });
+
+  useEffect(() => {
+    getLeaveDataHandler();
+  }, []);
+
+  const getLeaveDataHandler = async () => {
+    let tempArr = [];
+    let leaveData = await AsyncStorage.getItem('apply-leave');
+    let data = JSON.parse(leaveData);
+    if (data) {
+      data.filter(item => {
+        tempArr.push(item.fromDate);
+      });
+    }
+
+    setCommObj(prev => ({
+      ...prev,
+      leaveStartDates: tempArr,
+    }));
+  };
 
   const applyLeaveHandler = async () => {
     let array = [
@@ -32,9 +54,10 @@ const TopTabNav = props => {
         numberOfDays: commObj.numberOfDays,
       },
     ];
-    let leaveData = await AsyncStorage.getItem('apply-leave');
-    let data = JSON.parse(leaveData);
-    if (data) {
+    // let leaveData = await AsyncStorage.getItem('apply-leave');
+    // let data = JSON.parse(leaveData);
+    // console.log('data---->', data);
+    if (commObj.leaveStartDates) {
       data.forEach(item => {
         array.push(item);
       });
@@ -46,12 +69,6 @@ const TopTabNav = props => {
     }));
     customNavigation.goBack();
   };
-
-  // useEffect(() => {
-  //   if(commObj.leaveData) {
-  //     commObj.leaveData.forEach()
-  //   }
-  // }, [])
 
   useEffect(() => {
     let startDateStr = moment(commObj.fromDate).format('YYYY-MM-DD');
@@ -105,7 +122,7 @@ const TopTabNav = props => {
     }));
   }, [commObj.fromDate, commObj.toDate]);
   useEffect(() => {
-    console.log('TopTabNav commObj-------->', props);
+    console.log('TopTabNav commObj-------->', commObj);
   }, [commObj]);
   return (
     <SafeAreaView
@@ -113,223 +130,228 @@ const TopTabNav = props => {
         flex: 1,
         backgroundColor: '#fff',
       }}>
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 15,
-          paddingBottom: 20,
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
         }}>
         <View
           style={{
             flex: 1,
-            paddingTop: 30,
-            gap: 15,
+            paddingHorizontal: 15,
+            paddingBottom: 20,
           }}>
           <View
             style={{
-              alignItems: 'center',
-              paddingVertical: 10,
-            }}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000',
-                fontWeight: 'bold',
-              }}>
-              Apply Leave
-            </Text>
-          </View>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              setCommObj(prev => ({
-                ...prev,
-                formDatePicker: true,
-              }));
+              flex: 1,
+              paddingTop: 30,
+              gap: 15,
             }}>
             <View
               style={{
-                borderWidth: 0.5,
-                borderColor: 'blue',
-                borderRadius: 8,
-                paddingLeft: 10,
-                paddingVertical: 5,
+                alignItems: 'center',
+                paddingVertical: 10,
               }}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: '#777777',
-                }}>
-                Start Date :
-              </Text>
               <Text
                 style={{
                   fontSize: 16,
-                  color: '#000000',
+                  color: '#000',
+                  fontWeight: 'bold',
                 }}>
-                {moment(commObj.fromDate).format('MMMM DD, YYYY')}
+                Apply Leave
               </Text>
             </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              setCommObj(prev => ({
-                ...prev,
-                toDatePicker: true,
-              }));
-            }}>
-            <View
-              style={{
-                borderWidth: 0.5,
-                borderColor: 'blue',
-                borderRadius: 8,
-                paddingLeft: 10,
-                paddingVertical: 5,
-              }}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: '#777777',
-                }}>
-                End Date :
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#000000',
-                }}>
-                {moment(commObj.toDate).format('MMMM DD, YYYY')}
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <View>
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#777777',
-                paddingBottom: 5,
-              }}>
-              Reason for a leave
-            </Text>
-            <TextInput
-              value={commObj.reason}
-              multiline={true}
-              numberOfLines={10}
-              style={{
-                height: 90,
-                textAlignVertical: 'top',
-                borderWidth: 0.5,
-                borderColor: 'blue',
-                borderRadius: 8,
-                color: '#000',
-                paddingLeft: 10,
-              }}
-              placeholder="Enter reason for a Leave"
-              placeholderTextColor="#777777"
-              onChangeText={text => {
+            <TouchableWithoutFeedback
+              onPress={() => {
                 setCommObj(prev => ({
                   ...prev,
-                  reason: text,
+                  formDatePicker: true,
                 }));
-              }}
-            />
+              }}>
+              <View
+                style={{
+                  borderWidth: 0.5,
+                  borderColor: 'blue',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  paddingVertical: 5,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: '#777777',
+                  }}>
+                  Start Date :
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#000000',
+                  }}>
+                  {moment(commObj.fromDate).format('MMMM DD, YYYY')}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setCommObj(prev => ({
+                  ...prev,
+                  toDatePicker: true,
+                }));
+              }}>
+              <View
+                style={{
+                  borderWidth: 0.5,
+                  borderColor: 'blue',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  paddingVertical: 5,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: '#777777',
+                  }}>
+                  End Date :
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#000000',
+                  }}>
+                  {moment(commObj.toDate).format('MMMM DD, YYYY')}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <View>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: '#777777',
+                  paddingBottom: 5,
+                }}>
+                Reason for a leave
+              </Text>
+              <TextInput
+                value={commObj.reason}
+                multiline={true}
+                numberOfLines={10}
+                style={{
+                  height: 90,
+                  textAlignVertical: 'top',
+                  borderWidth: 0.5,
+                  borderColor: 'blue',
+                  borderRadius: 8,
+                  color: '#000',
+                  paddingLeft: 10,
+                }}
+                placeholder="Enter reason for a Leave"
+                placeholderTextColor="#777777"
+                onChangeText={text => {
+                  setCommObj(prev => ({
+                    ...prev,
+                    reason: text,
+                  }));
+                }}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingLeft: 5,
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: '#777777',
+                }}>
+                Number of Days:{' '}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: '#000',
+                }}>
+                {commObj.numberOfDays}
+              </Text>
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingLeft: 5,
+          <TouchableWithoutFeedback
+            onPress={() => {
+              if (commObj.reason !== '') {
+                applyLeaveHandler();
+              }
             }}>
-            <Text
+            <View
               style={{
-                fontSize: 14,
-                color: '#777777',
+                paddingVertical: 10,
+                alignItems: 'center',
+                backgroundColor: commObj.reason !== '' ? 'blue' : 'lightblue',
+                borderRadius: 8,
               }}>
-              Number of Days:{' '}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: '#000',
-              }}>
-              {commObj.numberOfDays}
-            </Text>
-          </View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#fff',
+                  fontWeight: 'bold',
+                }}>
+                Apply Leave
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <DatePicker
+            modal
+            mode="date"
+            date={commObj.fromDate}
+            open={commObj.formDatePicker}
+            title="Select Start Date"
+            onConfirm={date => {
+              setCommObj(prev => ({
+                ...prev,
+                fromDate: date,
+                formDatePicker: false,
+              }));
+            }}
+            onCancel={() => {
+              setCommObj(prev => ({
+                ...prev,
+                formDatePicker: false,
+              }));
+            }}
+          />
+          <DatePicker
+            modal
+            mode="date"
+            // maximumDate={
+            //   moment(commObj.fromDate).format('YYYY-MM-DD') <
+            //   commObj.leaveData[0].fromDate
+            //     ? new Date(
+            //         commObj.leaveData[0].fromDate
+            //           .subtract(1, 'days')
+            //           .format('YYYY-MM-DD'),
+            //       )
+            //     : null
+            // }
+            title="Select End Date"
+            date={commObj.toDate}
+            open={commObj.toDatePicker}
+            onConfirm={date => {
+              setCommObj(prev => ({
+                ...prev,
+                toDate: date,
+                toDatePicker: false,
+              }));
+            }}
+            onCancel={() => {
+              setCommObj(prev => ({
+                ...prev,
+                toDatePicker: false,
+              }));
+            }}
+          />
         </View>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            if (commObj.reason !== '') {
-              applyLeaveHandler();
-            }
-          }}>
-          <View
-            style={{
-              paddingVertical: 10,
-              alignItems: 'center',
-              backgroundColor: commObj.reason !== '' ? 'blue' : 'lightblue',
-              borderRadius: 8,
-            }}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#fff',
-                fontWeight: 'bold',
-              }}>
-              Apply Leave
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <DatePicker
-          modal
-          mode="date"
-          date={commObj.fromDate}
-          open={commObj.formDatePicker}
-          title="Select Start Date"
-          onConfirm={date => {
-            setCommObj(prev => ({
-              ...prev,
-              fromDate: date,
-              formDatePicker: false,
-            }));
-          }}
-          onCancel={() => {
-            setCommObj(prev => ({
-              ...prev,
-              formDatePicker: false,
-            }));
-          }}
-        />
-        <DatePicker
-          modal
-          mode="date"
-          // maximumDate={
-          //   moment(commObj.fromDate).format('YYYY-MM-DD') <
-          //   commObj.leaveData[0].fromDate
-          //     ? new Date(
-          //         commObj.leaveData[0].fromDate
-          //           .subtract(1, 'days')
-          //           .format('YYYY-MM-DD'),
-          //       )
-          //     : null
-          // }
-          title="Select End Date"
-          date={commObj.toDate}
-          open={commObj.toDatePicker}
-          onConfirm={date => {
-            setCommObj(prev => ({
-              ...prev,
-              toDate: date,
-              toDatePicker: false,
-            }));
-          }}
-          onCancel={() => {
-            setCommObj(prev => ({
-              ...prev,
-              toDatePicker: false,
-            }));
-          }}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
