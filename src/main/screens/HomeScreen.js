@@ -229,16 +229,34 @@ const HomeScreen = () => {
                   <View
                     style={{
                       width: '100%',
-                      height: 30,
+                      height: 40,
                       backgroundColor: marked
                         ? state === 'disabled'
                           ? ''
                           : 'lightblue'
+                        : state === 'today'
+                        ? 'lightgreen'
                         : '',
-                      borderTopLeftRadius: start ? 50 : 0,
-                      borderBottomLeftRadius: start ? 50 : 0,
-                      borderTopRightRadius: end ? 50 : 0,
-                      borderBottomRightRadius: end ? 50 : 0,
+                      borderTopLeftRadius: start
+                        ? 40 / 2
+                        : state === 'today'
+                        ? 40 / 2
+                        : 0,
+                      borderBottomLeftRadius: start
+                        ? 40 / 2
+                        : state === 'today'
+                        ? 40 / 2
+                        : 0,
+                      borderTopRightRadius: end
+                        ? 40 / 2
+                        : state === 'today'
+                        ? 40 / 2
+                        : 0,
+                      borderBottomRightRadius: end
+                        ? 40 / 2
+                        : state === 'today'
+                        ? 40 / 2
+                        : 0,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
