@@ -300,9 +300,30 @@ const HomeScreen = () => {
             }}
           />
         </View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setCommObj(prev => ({
+              ...prev,
+              selectadDate: commObj.todayDate,
+            }));
+          }}>
+          <View
+            style={{
+              paddingVertical: 20,
+            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 23,
+                color: '#000',
+              }}>
+              {commObj.todayDate}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
         <View
           style={{
-            paddingTop: 50,
+            paddingTop: 10,
           }}>
           {commObj.dataInfo &&
             commObj.dataInfo.map((item, index) => {
