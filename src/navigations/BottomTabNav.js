@@ -14,11 +14,11 @@ const BottomTabNav = () => {
         component={HomeScreen}
         options={{headerShown: false}}
       />
-      {/* <BottomTab.Screen
+      <BottomTab.Screen
         name="profile"
         component={ProfileScreen}
         options={{headerShown: false}}
-      /> */}
+      />
       <BottomTab.Screen
         name="leaves"
         component={LeavesScreen}
