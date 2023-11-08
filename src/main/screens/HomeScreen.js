@@ -83,6 +83,25 @@ const HomeScreen = () => {
     });
   };
 
+  const customHeader = () => (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        setModalVisible(true);
+      }}>
+      <View>
+        <Text
+          style={{
+            fontSize: 16,
+            lineHeight: 23,
+            fontWeight: 'bold',
+            color: '#000',
+          }}>
+          {moment(commObj.selectadDate).format('MMMM YYYY')}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+
   // const updateHandler = () => {
   //   if (
   //     moment(commObj.date).format('MM') <
@@ -252,43 +271,16 @@ const HomeScreen = () => {
                 />
               )
             }
+            onVisibleMonthsChange={month => {
+              console.log('onVisibleMonthsChange----->', month);
+            }}
+            renderHeader={customHeader}
             enableSwipeMonths={true}
-            // onMonthChange={month => {
-            //   setCommObj(prev => ({
-            //     ...prev,
-            //     selectadDate: month.dateString,
-            //     changedMonth: moment(month.dateString).format('MMMM YYYY'),
-            //     changedYear: moment(month.dateString).format('YYYY'),
-            //   }));
-            // }}
-            renderHeader={() => {
-              return (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      setModalVisible(true);
-                    }}>
-                    <View
-                      style={{
-                        padding: 5,
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          color: '#000000',
-                          lineHeight: 23,
-                          fontWeight: 'bold',
-                        }}>
-                        {commObj.changedMonth}
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-              );
+            onMonthChange={month => {
+              setCommObj(prev => ({
+                ...prev,
+                selectadDate: month.dateString,
+              }));
             }}
           />
         </View>
