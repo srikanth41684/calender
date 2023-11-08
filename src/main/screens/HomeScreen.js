@@ -64,14 +64,28 @@ const HomeScreen = () => {
 
   useEffect(() => {
     isFocused && leaveDataHanlder();
-  }, [isFocused]);
+  }, [isFocused, commObj.selectadDate]);
 
   const leaveDataHanlder = async () => {
     let leaveData = await AsyncStorage.getItem('apply-leave');
     let data = JSON.parse(leaveData);
+    let arr = [];
+    if (data) {
+      data.filter(item => {
+        if (
+          moment(item.fromDate).month() + 1 ===
+            moment(commObj.selectadDate).month() + 1 &&
+          moment(item.fromDate).year() === moment(commObj.selectadDate).year()
+        ) {
+          console.log('leaveItem----->', item);
+          arr.push(item);
+        }
+      });
+    }
+    console.log('arr---------->', arr);
     setCommObj(prev => ({
       ...prev,
-      dataInfo: data,
+      dataInfo: arr,
     }));
   };
 
@@ -80,6 +94,7 @@ const HomeScreen = () => {
     customNavigation.navigate('toptab', {
       date: date.dateString,
       holidaysList: commObj.holidaysList,
+      leaves: commObj.dataInfo,
     });
   };
 
@@ -198,7 +213,7 @@ const HomeScreen = () => {
                       ...prev,
                       selectadDate: date.dateString,
                     }));
-                    if (!holiday && dd !== 'Sun' && dd !== 'Sat') {
+                    if (!holiday && dd !== 'Sun' && dd !== 'Sat' && !marked) {
                       leaveApplyHandler(date);
                     }
                   }}>
@@ -206,7 +221,11 @@ const HomeScreen = () => {
                     style={{
                       width: '100%',
                       height: 30,
-                      backgroundColor: marked ? 'lightblue' : '',
+                      backgroundColor: marked
+                        ? state === 'disabled'
+                          ? ''
+                          : 'lightblue'
+                        : '',
                       borderTopLeftRadius: start ? 50 : 0,
                       borderBottomLeftRadius: start ? 50 : 0,
                       borderTopRightRadius: end ? 50 : 0,

@@ -20,6 +20,7 @@ const TopTabNav = props => {
     formDatePicker: false,
     toDatePicker: false,
     numberOfDays: 1,
+    leaveData: props.route.params.leaves,
     holidaysList: props.route.params.holidaysList,
   });
 
@@ -46,6 +47,12 @@ const TopTabNav = props => {
     }));
     customNavigation.goBack();
   };
+
+  // useEffect(() => {
+  //   if(commObj.leaveData) {
+  //     commObj.leaveData.forEach()
+  //   }
+  // }, [])
 
   useEffect(() => {
     let startDateStr = moment(commObj.fromDate).format('YYYY-MM-DD');
@@ -296,6 +303,16 @@ const TopTabNav = props => {
         <DatePicker
           modal
           mode="date"
+          // maximumDate={
+          //   moment(commObj.fromDate).format('YYYY-MM-DD') <
+          //   commObj.leaveData[0].fromDate
+          //     ? new Date(
+          //         commObj.leaveData[0].fromDate
+          //           .subtract(1, 'days')
+          //           .format('YYYY-MM-DD'),
+          //       )
+          //     : null
+          // }
           title="Select End Date"
           date={commObj.toDate}
           open={commObj.toDatePicker}
