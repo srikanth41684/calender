@@ -206,13 +206,7 @@ const HomeScreen = () => {
                     style={{
                       width: '100%',
                       height: 30,
-                      backgroundColor: marked
-                        ? holiday || dd == 'Sun' || dd == 'Sat'
-                          ? ''
-                          : state === 'disabled'
-                          ? ''
-                          : 'lightblue'
-                        : '',
+                      backgroundColor: marked ? 'lightblue' : '',
                       borderTopLeftRadius: start ? 50 : 0,
                       borderBottomLeftRadius: start ? 50 : 0,
                       borderTopRightRadius: end ? 50 : 0,
@@ -271,9 +265,6 @@ const HomeScreen = () => {
                 />
               )
             }
-            onVisibleMonthsChange={month => {
-              console.log('onVisibleMonthsChange----->', month);
-            }}
             renderHeader={customHeader}
             enableSwipeMonths={true}
             onMonthChange={month => {
