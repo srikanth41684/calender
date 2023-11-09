@@ -11,7 +11,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/Feather';
 import {Calendar} from 'react-native-calendars';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
   const [commObj, setCommObj] = useState({
     dateWeeks: [],
     selectedDate: moment().format('YYYY-MM-DD'),
@@ -113,7 +113,15 @@ const ProfileScreen = () => {
           paddingHorizontal: 15,
           backgroundColor: '#EFF1FE',
         }}>
-        <View
+        <TouchableWithoutFeedback
+          onPress={() => {
+            navigation.navigate('welcome');
+          }}>
+          <View>
+            <Text>Wellcome</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        {/* <View
           style={{
             flex: 1,
           }}>
@@ -618,7 +626,7 @@ const ProfileScreen = () => {
               </TouchableWithoutFeedback>
             </View>
           </TouchableWithoutFeedback>
-        </Modal>
+        </Modal> */}
       </View>
     </SafeAreaView>
   );
