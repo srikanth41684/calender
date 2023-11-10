@@ -170,6 +170,14 @@ const TopTabNav = props => {
               paddingTop: 30,
               gap: 15,
             }}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                customNavigation.goBack();
+              }}>
+              <View>
+                <Text>back</Text>
+              </View>
+            </TouchableWithoutFeedback>
             <View
               style={{
                 alignItems: 'center',
