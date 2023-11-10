@@ -174,8 +174,16 @@ const TopTabNav = props => {
               onPress={() => {
                 customNavigation.goBack();
               }}>
-              <View>
-                <Text>back</Text>
+              <View
+                style={{
+                  padding: 5,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                  }}>
+                  back
+                </Text>
               </View>
             </TouchableWithoutFeedback>
             <View
