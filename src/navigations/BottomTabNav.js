@@ -25,11 +25,11 @@ const BottomTabNav = () => {
         component={LeavesScreen}
         options={{headerShown: false}}
       /> */}
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="holiday"
         component={HolidaysListScreen}
         options={{headerShown: false}}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 };
