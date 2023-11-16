@@ -24,6 +24,8 @@ const HomeScreen = () => {
     changedYear: null,
     dataInfo: null,
     markedDates: null,
+    minDate: null,
+    maxDate: null,
     holidaysList: [
       {
         date: '2023-11-14',
@@ -158,6 +160,35 @@ const HomeScreen = () => {
   // };
 
   useEffect(() => {
+    let todayDate = moment(new Date()).format('YYYY-MM-DD');
+    const endMonth = moment().month('March').format('MM');
+
+    if (moment(todayDate).format('MM') <= endMonth) {
+      console.log('yes');
+      let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
+      let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
+      let maxDate = `${year}-03-31`;
+      console.log('minDate====>', minDate, 'maxDate====>', maxDate);
+      // setCommObj(prev => ({
+      //   ...prev,
+      //   minDate: minDate,
+      //   maxDate: maxDate,
+      // }));
+    } else {
+      console.log('no');
+      let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
+      let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
+      let maxDate = `${year}-03-31`;
+      console.log('minDate====>', minDate, 'maxDate====>', maxDate);
+      // setCommObj(prev => ({
+      //   ...prev,
+      //   minDate: minDate,
+      //   maxDate: maxDate,
+      // }));
+    }
+  }, []);
+
+  useEffect(() => {
     console.log('Home-commObj------->', commObj);
   }, [commObj]);
   return (
@@ -176,8 +207,10 @@ const HomeScreen = () => {
           }}>
           <Calendar
             initialDate={commObj.selectadDate}
-            minDate="2023-04-01"
-            maxDate="2024-03-31"
+            // minDate={commObj.minDate ? commObj.minDate : null}
+            // maxDate={commObj.maxDate ? commObj.maxDate : null}
+            minDate={'2023-04-01'}
+            maxDate={'2024-03-31'}
             dayComponent={({date, state}) => {
               let marked = false;
               let start = false;

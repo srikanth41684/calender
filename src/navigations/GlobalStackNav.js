@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabNav from './BottomTabNav';
 import TopTabNav from './TopTabNav';
 import WellcomeScreen from '../main/screens/WellcomeScreen';
+import SettingScreen from '../main/screens/SettingScreen';
 
 const GlobalStack = createNativeStackNavigator();
 
@@ -23,6 +24,11 @@ const GlobalStackNav = () => {
         <GlobalStack.Screen
           name="welcome"
           component={WellcomeScreen}
+          options={{headerShown: false}}
+        />
+        <GlobalStack.Screen
+          name="setting"
+          component={SettingScreen}
           options={{headerShown: false}}
         />
       </GlobalStack.Navigator>

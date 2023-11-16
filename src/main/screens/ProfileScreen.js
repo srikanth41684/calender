@@ -121,6 +121,14 @@ const ProfileScreen = ({navigation}) => {
             <Text>Wellcome</Text>
           </View>
         </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            navigation.navigate('setting');
+          }}>
+          <View>
+            <Text>Setting</Text>
+          </View>
+        </TouchableWithoutFeedback>
         {/* <View
           style={{
             flex: 1,

@@ -82,9 +82,9 @@ const LeavesScreen = () => {
               <View
                 style={{
                   flex: 1,
-                  borderColor: '#4993fe',
+                  borderColor: '#3085FE',
                   borderWidth: 1,
-                  backgroundColor: '#f5f9ff',
+                  backgroundColor: '#F5F9FF',
                   padding: 15,
                   borderRadius: 10,
                 }}>
