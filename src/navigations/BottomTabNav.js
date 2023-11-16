@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../main/screens/HomeScreen';
 import ProfileScreen from '../main/screens/ProfileScreen';
 import LeavesScreen from '../main/screens/LeavesScreen';
+import HolidaysListScreen from '../main/screens/HolidaysListScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -24,6 +25,11 @@ const BottomTabNav = () => {
         component={LeavesScreen}
         options={{headerShown: false}}
       /> */}
+      <BottomTab.Screen
+        name="holiday"
+        component={HolidaysListScreen}
+        options={{headerShown: false}}
+      />
     </BottomTab.Navigator>
   );
 };
