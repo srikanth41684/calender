@@ -87,7 +87,7 @@ const HomeScreen = () => {
         }
       });
     }
-    console.log('month arr ------>', arr);
+    // console.log('month arr ------>', arr);
     setCommObj(prev => ({
       ...prev,
       dataInfo: arr,
@@ -164,22 +164,22 @@ const HomeScreen = () => {
     const endMonth = moment().month('March').format('MM');
 
     if (moment(todayDate).format('MM') <= endMonth) {
-      console.log('yes');
+      // console.log('yes');
       let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
       let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
       let maxDate = `${year}-03-31`;
-      console.log('minDate====>', minDate, 'maxDate====>', maxDate);
+      // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
       // setCommObj(prev => ({
       //   ...prev,
       //   minDate: minDate,
       //   maxDate: maxDate,
       // }));
     } else {
-      console.log('no');
+      // console.log('no');
       let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
       let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
       let maxDate = `${year}-03-31`;
-      console.log('minDate====>', minDate, 'maxDate====>', maxDate);
+      // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
       // setCommObj(prev => ({
       //   ...prev,
       //   minDate: minDate,
@@ -189,7 +189,7 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Home-commObj------->', commObj);
+    // console.log('Home-commObj------->', commObj);
   }, [commObj]);
   return (
     <SafeAreaView

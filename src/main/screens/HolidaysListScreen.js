@@ -33,22 +33,28 @@ const HolidaysListScreen = () => {
             backgroundColor: '#fff',
             paddingVertical: 15,
             borderRadius: 15,
-            borderLeftColor: 'red',
+            borderLeftColor: '#3085FE',
             borderLeftWidth: 15,
+            paddingLeft: 10,
+            paddingRight: 20,
           }}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
             <View
               style={{
                 flexDirection: 'row',
+                paddingBottom: 10,
+                alignItems: 'center',
               }}>
-              <View>
-                <Icon name="calendar" size={30} color={'#000'} />
-              </View>
-              <View>
+              <Icon name="calendar" size={30} color={'#000'} />
+              <View
+                style={{
+                  paddingTop: 5,
+                }}>
                 <Text
                   style={{
                     fontSize: 16,
@@ -61,10 +67,20 @@ const HolidaysListScreen = () => {
               </View>
             </View>
             <View>
-              <Text>Thursday</Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  lineHeight: 21,
+                  color: '#777777',
+                }}>
+                Thursday
+              </Text>
             </View>
           </View>
-          <View>
+          <View
+            style={{
+              paddingLeft: 5,
+            }}>
             <Text
               style={{
                 fontSize: 18,
