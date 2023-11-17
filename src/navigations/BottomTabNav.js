@@ -4,6 +4,7 @@ import HomeScreen from '../main/screens/HomeScreen';
 import ProfileScreen from '../main/screens/ProfileScreen';
 import LeavesScreen from '../main/screens/LeavesScreen';
 import HolidaysListScreen from '../main/screens/HolidaysListScreen';
+import UserProfileScreen from '../main/screens/UserProfileScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -25,9 +26,14 @@ const BottomTabNav = () => {
         component={LeavesScreen}
         options={{headerShown: false}}
       /> */}
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="holiday"
         component={HolidaysListScreen}
+        options={{headerShown: false}}
+      /> */}
+      <BottomTab.Screen
+        name="userprofile"
+        component={UserProfileScreen}
         options={{headerShown: false}}
       />
     </BottomTab.Navigator>
