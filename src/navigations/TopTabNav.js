@@ -372,6 +372,9 @@ const TopTabNav = props => {
                   )
                 : null
             }
+            minimumDate={
+              commObj.fromDate <= commObj.toDate ? commObj.fromDate : null
+            }
             title="Select End Date"
             date={commObj.toDate}
             open={commObj.toDatePicker}
