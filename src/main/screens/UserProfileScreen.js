@@ -73,6 +73,10 @@ const UserProfileScreen = () => {
             </View>
           </TouchableWithoutFeedback>
         </View>
+        <View
+          style={{
+            flex: 1,
+          }}></View>
       </View>
     </SafeAreaView>
   );
