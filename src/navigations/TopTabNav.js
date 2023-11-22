@@ -344,6 +344,8 @@ const TopTabNav = props => {
             modal
             mode="date"
             date={commObj.fromDate}
+            minimumDate={new Date()}
+            maximumDate={new Date('2024-03-31')}
             open={commObj.formDatePicker}
             title="Select Start Date"
             onConfirm={date => {
