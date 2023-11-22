@@ -319,7 +319,7 @@ const TopTabNav = props => {
           </View>
           <TouchableWithoutFeedback
             onPress={() => {
-              if (commObj.reason !== '') {
+              if (commObj.reason !== '' && commObj.numberOfDays > 0) {
                 applyLeaveHandler();
               }
             }}>
@@ -327,7 +327,10 @@ const TopTabNav = props => {
               style={{
                 paddingVertical: 10,
                 alignItems: 'center',
-                backgroundColor: commObj.reason !== '' ? 'blue' : 'lightblue',
+                backgroundColor:
+                  commObj.reason !== '' && commObj.numberOfDays > 0
+                    ? 'blue'
+                    : 'lightblue',
                 borderRadius: 8,
               }}>
               <Text

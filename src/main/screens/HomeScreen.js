@@ -120,6 +120,15 @@ const HomeScreen = () => {
     </TouchableWithoutFeedback>
   );
 
+  const handleMonthChange = useCallback(month => {
+    if (commObj.selectadDate !== month.dateString) {
+      setCommObj(prev => ({
+        ...prev,
+        selectadDate: month.dateString,
+      }));
+    }
+  }, []);
+
   // const updateHandler = () => {
   //   if (
   //    moment(commObj.date).format('MM') <
@@ -346,14 +355,15 @@ const HomeScreen = () => {
             }
             renderHeader={customHeader}
             enableSwipeMonths={true}
-            onMonthChange={month => {
-              if (commObj.selectadDate !== month.dateString) {
-                setCommObj(prev => ({
-                  ...prev,
-                  selectadDate: month.dateString,
-                }));
-              }
-            }}
+            onMonthChange={handleMonthChange()}
+            // onMonthChange={month => {
+            //   if (commObj.selectadDate !== month.dateString) {
+            //     setCommObj(prev => ({
+            //       ...prev,
+            //       selectadDate: month.dateString,
+            //     }));
+            //   }
+            // }}
           />
         </View>
         <TouchableWithoutFeedback
