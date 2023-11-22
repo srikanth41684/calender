@@ -370,7 +370,7 @@ const TopTabNav = props => {
                       .subtract(1, 'days')
                       .format('YYYY-MM-DD'),
                   )
-                : null
+                : new Date('2024-03-31')
             }
             minimumDate={
               commObj.fromDate <= commObj.toDate ? commObj.fromDate : null
