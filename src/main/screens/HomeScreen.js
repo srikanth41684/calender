@@ -66,7 +66,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     isFocused && leaveDataHanlder();
-  }, [isFocused, commObj.selectadDate]);
+  }, [isFocused]);
 
   const leaveDataHanlder = async () => {
     let leaveData = await AsyncStorage.getItem('apply-leave');
@@ -189,7 +189,7 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    // console.log('Home-commObj------->', commObj);
+    console.log('Home-commObj------->', commObj);
   }, [commObj]);
   return (
     <SafeAreaView
@@ -347,10 +347,12 @@ const HomeScreen = () => {
             renderHeader={customHeader}
             enableSwipeMonths={true}
             onMonthChange={month => {
-              setCommObj(prev => ({
-                ...prev,
-                selectadDate: month.dateString,
-              }));
+              if (commObj.selectadDate !== month.dateString) {
+                setCommObj(prev => ({
+                  ...prev,
+                  selectadDate: month.dateString,
+                }));
+              }
             }}
           />
         </View>
