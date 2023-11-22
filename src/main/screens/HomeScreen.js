@@ -25,6 +25,7 @@ const HomeScreen = () => {
     dataInfo: null,
     markedDates: null,
     minDate: null,
+    count: 0,
     maxDate: null,
     holidaysList: [
       {
@@ -119,15 +120,6 @@ const HomeScreen = () => {
       </View>
     </TouchableWithoutFeedback>
   );
-
-  const handleMonthChange = useCallback(month => {
-    if (commObj.selectadDate !== month.dateString) {
-      setCommObj(prev => ({
-        ...prev,
-        selectadDate: month.dateString,
-      }));
-    }
-  }, []);
 
   // const updateHandler = () => {
   //   if (
@@ -355,15 +347,16 @@ const HomeScreen = () => {
             }
             renderHeader={customHeader}
             enableSwipeMonths={true}
-            onMonthChange={handleMonthChange()}
-            // onMonthChange={month => {
-            //   if (commObj.selectadDate !== month.dateString) {
-            //     setCommObj(prev => ({
-            //       ...prev,
-            //       selectadDate: month.dateString,
-            //     }));
-            //   }
-            // }}
+            onMonthChange={month => {
+              if (commObj.selectadDate !== month.dateString) {
+                setTimeout(() => {
+                  setCommObj(prev => ({
+                    ...prev,
+                    selectadDate: month.dateString,
+                  }));
+                }, 0);
+              }
+            }}
           />
         </View>
         <TouchableWithoutFeedback
