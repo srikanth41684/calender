@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   Modal,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment/moment';
@@ -52,6 +52,26 @@ const HomeScreen = () => {
     },
   });
 
+  // Debounce function
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  // Handler for onVisibleMonthsChange
+  const handleVisibleMonthsChange = useCallback(
+    debounce(months => {
+      setCommObj(prev => ({
+        ...prev,
+        selectadDate: months[0]?.dateString,
+      }));
+    }, 20),
+    [],
+  );
+
   // initially select today's date
   useEffect(() => {
     const currentDate = new Date();
@@ -88,7 +108,6 @@ const HomeScreen = () => {
         }
       });
     }
-    // console.log('month arr ------>', arr);
     setCommObj(prev => ({
       ...prev,
       dataInfo: arr,
@@ -160,34 +179,34 @@ const HomeScreen = () => {
   //   }
   // };
 
-  useEffect(() => {
-    let todayDate = moment(new Date()).format('YYYY-MM-DD');
-    const endMonth = moment().month('March').format('MM');
+  // useEffect(() => {
+  //   let todayDate = moment(new Date()).format('YYYY-MM-DD');
+  //   const endMonth = moment().month('March').format('MM');
 
-    if (moment(todayDate).format('MM') <= endMonth) {
-      // console.log('yes');
-      let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
-      let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
-      let maxDate = `${year}-03-31`;
-      // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
-      // setCommObj(prev => ({
-      //   ...prev,
-      //   minDate: minDate,
-      //   maxDate: maxDate,
-      // }));
-    } else {
-      // console.log('no');
-      let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
-      let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
-      let maxDate = `${year}-03-31`;
-      // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
-      // setCommObj(prev => ({
-      //   ...prev,
-      //   minDate: minDate,
-      //   maxDate: maxDate,
-      // }));
-    }
-  }, []);
+  //   if (moment(todayDate).format('MM') <= endMonth) {
+  //     // console.log('yes');
+  //     let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
+  //     let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
+  //     let maxDate = `${year}-03-31`;
+  //     // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
+  //     // setCommObj(prev => ({
+  //     //   ...prev,
+  //     //   minDate: minDate,
+  //     //   maxDate: maxDate,
+  //     // }));
+  //   } else {
+  //     // console.log('no');
+  //     let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
+  //     let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
+  //     let maxDate = `${year}-03-31`;
+  //     // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
+  //     // setCommObj(prev => ({
+  //     //   ...prev,
+  //     //   minDate: minDate,
+  //     //   maxDate: maxDate,
+  //     // }));
+  //   }
+  // }, []);
 
   useEffect(() => {
     console.log('Home-commObj------->', commObj);
@@ -208,8 +227,6 @@ const HomeScreen = () => {
           }}>
           <Calendar
             initialDate={commObj.selectadDate}
-            // minDate={commObj.minDate ? commObj.minDate : null}
-            // maxDate={commObj.maxDate ? commObj.maxDate : null}
             minDate={'2023-04-01'}
             maxDate={'2024-03-31'}
             dayComponent={({date, state}) => {
@@ -347,16 +364,15 @@ const HomeScreen = () => {
             }
             renderHeader={customHeader}
             enableSwipeMonths={true}
-            onMonthChange={month => {
-              if (commObj.selectadDate !== month.dateString) {
-                setTimeout(() => {
-                  setCommObj(prev => ({
-                    ...prev,
-                    selectadDate: month.dateString,
-                  }));
-                }, 0);
-              }
-            }}
+            // onMonthChange={month => {
+            //   if (commObj.selectadDate != month.dateString) {
+            // setCommObj(prev => ({
+            //   ...prev,
+            //   selectadDate: month.dateString,
+            // }));
+            //   }
+            // }}
+            onVisibleMonthsChange={handleVisibleMonthsChange}
           />
         </View>
         <TouchableWithoutFeedback
