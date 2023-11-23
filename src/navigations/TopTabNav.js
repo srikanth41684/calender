@@ -15,12 +15,18 @@ import {useNavigation} from '@react-navigation/native';
 const TopTabNav = props => {
   const customNavigation = useNavigation();
   const [commObj, setCommObj] = useState({
-    fromDate: new Date(props.route.params.date),
-    toDate: new Date(props.route.params.date),
+    fromDate:
+      new Date(props.route.params.date) >= new Date()
+        ? new Date(props.route.params.date)
+        : new Date(),
+    toDate:
+      new Date(props.route.params.date) >= new Date()
+        ? new Date(props.route.params.date)
+        : new Date(),
     reason: '',
     formDatePicker: false,
     toDatePicker: false,
-    numberOfDays: 1,
+    numberOfDays: 0,
     leaveStartDates: null,
     holidaysList: props.route.params.holidaysList,
     maxDate: null,
@@ -356,6 +362,7 @@ const TopTabNav = props => {
                 ...prev,
                 fromDate: date,
                 formDatePicker: false,
+                toDate: date,
               }));
             }}
             onCancel={() => {
