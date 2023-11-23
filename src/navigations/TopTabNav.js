@@ -15,14 +15,8 @@ import {useNavigation} from '@react-navigation/native';
 const TopTabNav = props => {
   const customNavigation = useNavigation();
   const [commObj, setCommObj] = useState({
-    fromDate:
-      new Date(props.route.params.date) >= new Date()
-        ? new Date(props.route.params.date)
-        : new Date(),
-    toDate:
-      new Date(props.route.params.date) >= new Date()
-        ? new Date(props.route.params.date)
-        : new Date(),
+    fromDate: new Date(props.route.params.date),
+    toDate: new Date(props.route.params.date),
     reason: '',
     formDatePicker: false,
     toDatePicker: false,
@@ -353,7 +347,7 @@ const TopTabNav = props => {
             modal
             mode="date"
             date={commObj.fromDate}
-            minimumDate={new Date(moment().format('YYYY-MM-DD'))}
+            minimumDate={new Date('2023-04-01')}
             maximumDate={new Date('2024-03-31')}
             open={commObj.formDatePicker}
             title="Select Start Date"
