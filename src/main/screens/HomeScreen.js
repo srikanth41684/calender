@@ -87,7 +87,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     isFocused && leaveDataHanlder();
-  }, [isFocused]);
+  }, [isFocused, commObj.selectadDate]);
 
   const leaveDataHanlder = async () => {
     let leaveData = await AsyncStorage.getItem('apply-leave');

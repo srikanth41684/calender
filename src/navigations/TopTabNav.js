@@ -362,8 +362,13 @@ const TopTabNav = props => {
                 ...prev,
                 fromDate: date,
                 formDatePicker: false,
-                toDate: date,
               }));
+              if (date >= commObj.toDate) {
+                setCommObj(prev => ({
+                  ...prev,
+                  toDate: date,
+                }));
+              }
             }}
             onCancel={() => {
               setCommObj(prev => ({
