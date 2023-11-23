@@ -25,6 +25,7 @@ const HomeScreen = () => {
     dataInfo: null,
     markedDates: null,
     minDate: null,
+    maxDate: null,
     count: 0,
     maxDate: null,
     holidaysList: [
@@ -179,38 +180,37 @@ const HomeScreen = () => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   let todayDate = moment(new Date()).format('YYYY-MM-DD');
-  //   const endMonth = moment().month('March').format('MM');
-
-  //   if (moment(todayDate).format('MM') <= endMonth) {
-  //     // console.log('yes');
-  //     let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
-  //     let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
-  //     let maxDate = `${year}-03-31`;
-  //     // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
-  //     // setCommObj(prev => ({
-  //     //   ...prev,
-  //     //   minDate: minDate,
-  //     //   maxDate: maxDate,
-  //     // }));
-  //   } else {
-  //     // console.log('no');
-  //     let minDate = `${moment(commObj.todayDate).format('YYYY')}-04-01`;
-  //     let year = Number(moment(commObj.todayDate).format('YYYY')) + 1;
-  //     let maxDate = `${year}-03-31`;
-  //     // console.log('minDate====>', minDate, 'maxDate====>', maxDate);
-  //     // setCommObj(prev => ({
-  //     //   ...prev,
-  //     //   minDate: minDate,
-  //     //   maxDate: maxDate,
-  //     // }));
-  //   }
-  // }, []);
-
   useEffect(() => {
-    console.log('Home-commObj------->', commObj);
-  }, [commObj]);
+    // dynamic min and max dates logic
+    let todayDate = moment(new Date()).format('YYYY-MM-DD');
+    const endMonth = moment().month('March').format('MM');
+    const startMonth = moment().month('April').format('MM');
+
+    if (moment(todayDate).format('MM') >= startMonth) {
+      let year = moment(todayDate).format('YYYY');
+      let year2 = moment(todayDate).add(1, 'year').format('YYYY');
+      setCommObj(prev => ({
+        ...prev,
+        minDate: `${year}-${startMonth}-01`,
+        maxDate: `${year2}-${endMonth}-31`,
+      }));
+    }
+
+    if (endMonth >= moment(todayDate).format('MM')) {
+      console.log('yes');
+      let year = moment(todayDate).format('YYYY');
+      let year2 = moment(todayDate).subtract(1, 'year').format('YYYY');
+      setCommObj(prev => ({
+        ...prev,
+        minDate: `${year2}-${startMonth}-01`,
+        maxDate: `${year}-${endMonth}-31`,
+      }));
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   console.log('Home-commObj------->', commObj);
+  // }, [commObj]);
   return (
     <SafeAreaView
       style={{
@@ -227,8 +227,8 @@ const HomeScreen = () => {
           }}>
           <Calendar
             initialDate={commObj.selectadDate}
-            minDate={'2023-04-01'}
-            maxDate={'2024-03-31'}
+            minDate={commObj.minDate}
+            maxDate={commObj.maxDate}
             dayComponent={({date, state}) => {
               let marked = false;
               let start = false;
