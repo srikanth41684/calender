@@ -119,6 +119,8 @@ const HomeScreen = () => {
     customNavigation.navigate('toptab', {
       date: date.dateString,
       holidaysList: commObj.holidaysList,
+      minDate: commObj.minDate,
+      maxDate: commObj.maxDate,
     });
   };
 
@@ -141,45 +143,6 @@ const HomeScreen = () => {
     </TouchableWithoutFeedback>
   );
 
-  // const updateHandler = () => {
-  //   if (
-  //    moment(commObj.date).format('MM') <
-  //      moment(commObj.todayDate).format('MM') ||
-  //    commObj.selectedYear < moment(commObj.todayDate).format('YYYY')
-  //   ) {
-  //     setCommObj(prev => ({
-  //       ...prev,
-  //       disableMonthChange: true,
-  //     }));
-  //   } else {
-  //     setCommObj(prev => ({
-  //       ...prev,
-  //       disableMonthChange: false,
-  //     }));
-  //   }
-  // };
-
-  // const leaveApplyHandler = (day, data) => {
-  //   const selectedMonth = moment().month(commObj.selectedMonth).format('MM');
-  //   const selectadDate = day;
-  //   const endMonth = moment().month('March').format('MM');
-  //   const selectedYear = commObj.selectedYear;
-  //   const currentYear = moment(commObj.todayDate).format('YYYY');
-  //   if (
-  //    (selectedMonth == endMonth && selectadDate > 31) ||
-  //    (currentYear == selectedYear && selectedMonth > endMonth) ||
-  //    (currentYear == selectedYear - 1 && selectedMonth <= endMonth)
-  //   ) {
-  //     console.log('yes');
-  // customNavigation.navigate('toptab', {
-  //   date: data,
-  // });
-  //   } else {
-  //     console.log('No');
-  //     Alert.alert('This is not current financial year....');
-  //   }
-  // };
-
   useEffect(() => {
     // dynamic min and max dates logic
     let todayDate = moment(new Date()).format('YYYY-MM-DD');
@@ -197,7 +160,6 @@ const HomeScreen = () => {
     }
 
     if (endMonth >= moment(todayDate).format('MM')) {
-      console.log('yes');
       let year = moment(todayDate).format('YYYY');
       let year2 = moment(todayDate).subtract(1, 'year').format('YYYY');
       setCommObj(prev => ({
@@ -208,9 +170,9 @@ const HomeScreen = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   console.log('Home-commObj------->', commObj);
-  // }, [commObj]);
+  useEffect(() => {
+    console.log('Home-commObj------->', commObj);
+  }, [commObj]);
   return (
     <SafeAreaView
       style={{

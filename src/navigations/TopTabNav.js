@@ -347,8 +347,8 @@ const TopTabNav = props => {
             modal
             mode="date"
             date={commObj.fromDate}
-            minimumDate={new Date('2023-04-01')}
-            maximumDate={new Date('2024-03-31')}
+            minimumDate={new Date(props.route.params.minDate)}
+            maximumDate={new Date(props.route.params.maxDate)}
             open={commObj.formDatePicker}
             title="Select Start Date"
             onConfirm={date => {
@@ -381,7 +381,7 @@ const TopTabNav = props => {
                       .subtract(1, 'days')
                       .format('YYYY-MM-DD'),
                   )
-                : new Date('2024-03-31')
+                : new Date(props.route.params.maxDate)
             }
             minimumDate={
               commObj.fromDate <= commObj.toDate ? commObj.fromDate : null
