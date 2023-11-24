@@ -75,26 +75,40 @@ const TopTabNav = props => {
   };
 
   useEffect(() => {
-    let startDateStr = moment(commObj.fromDate).format('YYYY-MM-DD');
-    let endDateStr = moment(commObj.toDate).format('YYYY-MM-DD');
+    // let startDateStr = moment(commObj.fromDate).format('YYYY-MM-DD');
+    // let endDateStr = moment(commObj.toDate).format('YYYY-MM-DD');
 
-    const startDate = moment(startDateStr);
-    const endDate = moment(endDateStr);
+    const startDate = commObj.fromDate;
+    const endDate = commObj.toDate;
 
-    let allDates = [];
-    let currentDate = startDate.clone();
-    while (currentDate.isSameOrBefore(endDate, 'day')) {
-      allDates.push(currentDate.format('YYYY-MM-DD'));
-      currentDate.add(1, 'day');
+    const resultDates = [];
+    for (
+      let currentDate = new Date(startDate);
+      currentDate <= endDate;
+      currentDate.setDate(currentDate.getDate() + 1)
+    ) {
+      resultDates.push(moment(new Date(currentDate)).format('YYYY-MM-DD'));
     }
+
+    // let allDates = [];
+    // let currentDate = startDate.clone();
+    // while (currentDate.isSameOrBefore(endDate, 'day')) {
+    //   allDates.push(currentDate.format('YYYY-MM-DD'));
+    //   currentDate.add(1, 'day');
+    // }
+    // console.log(startDateStr, endDateStr);
+    // const resultArray = [];
+    // for (let i = startDateStr; i < endDateStr; i.setDate(i.getDate() + 1)) {
+    //   resultArray.push(i);
+    // }
 
     let newArr = [];
     let dates = [];
     commObj.holidaysList.forEach(res => {
       dates.push(res.date);
     });
-    if (allDates) {
-      allDates.forEach(item => {
+    if (resultDates) {
+      resultDates.forEach(item => {
         if (
           moment(item).format('ddd') !== 'Sun' &&
           moment(item).format('ddd') !== 'Sat'
