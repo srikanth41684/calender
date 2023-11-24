@@ -24,6 +24,7 @@ const TopTabNav = props => {
     leaveStartDates: null,
     holidaysList: props.route.params.holidaysList,
     maxDate: null,
+    leaveData: null,
   });
 
   useEffect(() => {
@@ -38,8 +39,11 @@ const TopTabNav = props => {
       data.filter(item => {
         tempArr.push(item.fromDate);
       });
+      setCommObj(prev => ({
+        ...prev,
+        leaveData: data,
+      }));
     }
-
     setCommObj(prev => ({
       ...prev,
       leaveStartDates: tempArr,
@@ -55,11 +59,10 @@ const TopTabNav = props => {
         numberOfDays: commObj.numberOfDays,
       },
     ];
-    let leaveData = await AsyncStorage.getItem('apply-leave');
-    let data = JSON.parse(leaveData);
-    console.log('data---->', data);
-    if (data) {
-      data.forEach(item => {
+    // let leaveData = await AsyncStorage.getItem('apply-leave');
+    // let data = JSON.parse(leaveData);
+    if (commObj.leaveData) {
+      commObj.leaveData.forEach(item => {
         array.push(item);
       });
     }
@@ -85,41 +88,26 @@ const TopTabNav = props => {
       currentDate.add(1, 'day');
     }
 
-    // for (
-    //   let currentDate = startDate.clone();
-    //   currentDate.isSameOrBefore(endDate, 'day');
-    //   currentDate.add(1, 'day')
-    // ) {
-    //   allDates.push(currentDate.format('YYYY-MM-DD'));
-    // }
-
     let newArr = [];
+    let dates = [];
+    commObj.holidaysList.forEach(res => {
+      dates.push(res.date);
+    });
     if (allDates) {
       allDates.forEach(item => {
         if (
           moment(item).format('ddd') !== 'Sun' &&
           moment(item).format('ddd') !== 'Sat'
         ) {
-          newArr.push(item);
+          if (!dates.includes(item)) {
+            newArr.push(item);
+          }
         }
       });
     }
-
-    let tempArr = [];
-    let dates = [];
-    commObj.holidaysList.forEach(res => {
-      dates.push(res.date);
-    });
-
-    if (newArr) {
-      tempArr = newArr.filter(item => {
-        return !dates.includes(item);
-      });
-    }
-
     setCommObj(prev => ({
       ...prev,
-      numberOfDays: tempArr.length,
+      numberOfDays: newArr.length,
     }));
   }, [commObj.fromDate, commObj.toDate]);
 

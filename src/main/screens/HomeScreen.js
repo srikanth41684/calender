@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeScreen = () => {
   const customNavigation = useNavigation();
   const isFocused = useIsFocused();
-  const [modalVisible, setModalVisible] = useState(false);
   const [commObj, setCommObj] = useState({
     todayDate: null,
     months: moment.months(),
@@ -27,6 +26,7 @@ const HomeScreen = () => {
     minDate: null,
     maxDate: null,
     count: 0,
+    modalVisible: false,
     maxDate: null,
     holidaysList: [
       {
@@ -101,8 +101,8 @@ const HomeScreen = () => {
       }));
       data.filter(item => {
         if (
-          moment(item.fromDate).month() + 1 ===
-            moment(commObj.selectadDate).month() + 1 &&
+          moment(item.fromDate).format('MM') ===
+            moment(commObj.selectadDate).format('MM') &&
           moment(item.fromDate).year() === moment(commObj.selectadDate).year()
         ) {
           arr.push(item);
@@ -127,7 +127,10 @@ const HomeScreen = () => {
   const customHeader = () => (
     <TouchableWithoutFeedback
       onPress={() => {
-        setModalVisible(true);
+        setCommObj(prev => ({
+          ...prev,
+          modalVisible: true,
+        }));
       }}>
       <View>
         <Text
@@ -234,7 +237,6 @@ const HomeScreen = () => {
                       dd !== 'Sat' &&
                       !marked &&
                       state !== 'disabled'
-                      // && commObj.todayDate <= date.dateString
                     ) {
                       leaveApplyHandler(date);
                     }
@@ -395,16 +397,19 @@ const HomeScreen = () => {
         <Modal
           animationType="fade"
           transparent={true}
-          visible={modalVisible}
+          visible={commObj.modalVisible}
           onRequestClose={() => {
-            setModalVisible(false);
+            setCommObj(prev => ({
+              ...prev,
+              modalVisible: false,
+            }));
           }}>
           <TouchableWithoutFeedback
             onPress={() => {
-              setModalVisible(!modalVisible);
               setCommObj(prev => ({
                 ...prev,
                 changedYear: moment(commObj.selectadDate).format('YYYY'),
+                modalVisible: !prev.modalVisible,
               }));
             }}>
             <View
@@ -417,7 +422,10 @@ const HomeScreen = () => {
               }}>
               <TouchableWithoutFeedback
                 onPress={() => {
-                  setModalVisible(true);
+                  setCommObj(prev => ({
+                    ...prev,
+                    modalVisible: true,
+                  }));
                 }}>
                 <View
                   style={{
@@ -503,8 +511,8 @@ const HomeScreen = () => {
                               ...prev,
                               changedMonth: `${item} ${commObj.changedYear}`,
                               selectadDate: date,
+                              modalVisible: false,
                             }));
-                            setModalVisible(false);
                           }}>
                           <View
                             style={{
