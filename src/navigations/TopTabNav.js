@@ -116,21 +116,38 @@ const TopTabNav = props => {
       let myDate = moment(commObj.fromDate).format('YYYY-MM-DD');
       let leaveDates = commObj.leaveStartDates;
 
-      let closestDate = null;
-
-      for (const dateString of leaveDates) {
-        const currentDate = moment(dateString);
-        if (
-          currentDate.isAfter(myDate) &&
-          (!closestDate || currentDate.isBefore(closestDate))
-        ) {
-          closestDate = currentDate;
-        }
+      let arr = [];
+      if (leaveDates) {
+        leaveDates.filter(item => {
+          if (item >= myDate) {
+            arr.push(item);
+          }
+        });
       }
-      setCommObj(prev => ({
-        ...prev,
-        maxDate: closestDate ? closestDate.format('YYYY-MM-DD') : null,
-      }));
+      if (arr) {
+        let sortedDates = arr.sort((a, b) => new Date(a) - new Date(b));
+        console.log('sortedDates------>', sortedDates[0]);
+        setCommObj(prev => ({
+          ...prev,
+          maxDate: sortedDates[0],
+        }));
+      }
+
+      // let closestDate = null;
+
+      // for (const dateString of leaveDates) {
+      //   const currentDate = moment(dateString);
+      //   if (
+      //     currentDate.isAfter(myDate) &&
+      //     (!closestDate || currentDate.isBefore(closestDate))
+      //   ) {
+      //     closestDate = currentDate;
+      //   }
+      // }
+      // setCommObj(prev => ({
+      //   ...prev,
+      //   maxDate: closestDate ? closestDate.format('YYYY-MM-DD') : null,
+      // }));
     }
   }, [commObj.fromDate, commObj.leaveStartDates]);
   useEffect(() => {
