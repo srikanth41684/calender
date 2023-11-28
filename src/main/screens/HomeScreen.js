@@ -178,19 +178,6 @@ const HomeScreen = () => {
     console.log('Home-commObj------->', commObj);
   }, [commObj]);
 
-  if (commObj.loader) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <ActivityIndicator color={'red'} size={30} />
-      </View>
-    );
-  }
-
   return (
     <SafeAreaView
       style={{

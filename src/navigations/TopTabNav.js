@@ -11,6 +11,7 @@ import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import notifee from '@notifee/react-native';
 
 const TopTabNav = props => {
   const customNavigation = useNavigation();
@@ -79,6 +80,7 @@ const TopTabNav = props => {
       ...prev,
       reason: '',
     }));
+    // onDisplayNotification();
     customNavigation.goBack();
   };
 
@@ -178,6 +180,30 @@ const TopTabNav = props => {
       // }));
     }
   }, [commObj.fromDate, commObj.leaveStartDates]);
+
+  // async function onDisplayNotification() {
+  //   // Request permissions (required for iOS)
+  //   await notifee.requestPermission();
+
+  //   // Create a channel (required for Android)
+  //   const channelId = await notifee.createChannel({
+  //     id: 'default',
+  //     name: 'Default Channel',
+  //   });
+
+  //   // Display a notification
+  //   await notifee.displayNotification({
+  //     title: 'You Applied the leave',
+  //     body: `Srikanth Applied leave for ${commObj.numberOfDays} days`,
+  //     android: {
+  //       channelId,
+  //       smallIcon: 'ic_launcher', // optional, defaults to 'ic_launcher'.
+  //       pressAction: {
+  //         id: 'default',
+  //       },
+  //     },
+  //   });
+  // }
   useEffect(() => {
     console.log('TopTabNav commObj-------->', commObj);
   }, [commObj]);

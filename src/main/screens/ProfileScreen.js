@@ -10,6 +10,7 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Feather';
 import {Calendar} from 'react-native-calendars';
+import notifee from '@notifee/react-native';
 
 const ProfileScreen = ({navigation}) => {
   const [commObj, setCommObj] = useState({
@@ -99,6 +100,30 @@ const ProfileScreen = ({navigation}) => {
     }));
   };
 
+  async function onDisplayNotification() {
+    // Request permissions (required for iOS)
+    await notifee.requestPermission();
+
+    // Create a channel (required for Android)
+    const channelId = await notifee.createChannel({
+      id: 'default',
+      name: 'Default Channel',
+    });
+
+    // Display a notification
+    await notifee.displayNotification({
+      title: 'You Applied the leave',
+      body: 'Srikanth Applied leave for 05 days',
+      android: {
+        channelId,
+        smallIcon: 'ic_launcher', // optional, defaults to 'ic_launcher'.
+        pressAction: {
+          id: 'default',
+        },
+      },
+    });
+  }
+
   useEffect(() => {
     console.log('Profile-commObj----->', commObj);
   }, [commObj]);
@@ -115,6 +140,14 @@ const ProfileScreen = ({navigation}) => {
         }}>
         <TouchableWithoutFeedback
           onPress={() => {
+            onDisplayNotification();
+          }}>
+          <View>
+            <Text>Click</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        {/* <TouchableWithoutFeedback
+          onPress={() => {
             navigation.navigate('welcome');
           }}>
           <View>
@@ -129,7 +162,7 @@ const ProfileScreen = ({navigation}) => {
             <Text>Setting</Text>
           </View>
         </TouchableWithoutFeedback>
-        {/* <View
+        <View
           style={{
             flex: 1,
           }}>
