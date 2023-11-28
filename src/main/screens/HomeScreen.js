@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   Modal,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -176,6 +177,20 @@ const HomeScreen = () => {
   useEffect(() => {
     console.log('Home-commObj------->', commObj);
   }, [commObj]);
+
+  if (commObj.loader) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator color={'red'} size={30} />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -252,26 +267,14 @@ const HomeScreen = () => {
                         : state === 'today'
                         ? 'lightgreen'
                         : '',
-                      borderTopLeftRadius: start
-                        ? 40 / 2
-                        : state === 'today'
-                        ? 40 / 2
-                        : 0,
-                      borderBottomLeftRadius: start
-                        ? 40 / 2
-                        : state === 'today'
-                        ? 40 / 2
-                        : 0,
-                      borderTopRightRadius: end
-                        ? 40 / 2
-                        : state === 'today'
-                        ? 40 / 2
-                        : 0,
-                      borderBottomRightRadius: end
-                        ? 40 / 2
-                        : state === 'today'
-                        ? 40 / 2
-                        : 0,
+                      borderTopLeftRadius:
+                        start || state === 'today' ? 40 / 2 : 0,
+                      borderBottomLeftRadius:
+                        start || state === 'today' ? 40 / 2 : 0,
+                      borderTopRightRadius:
+                        end || state === 'today' ? 40 / 2 : 0,
+                      borderBottomRightRadius:
+                        end || state === 'today' ? 40 / 2 : 0,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>

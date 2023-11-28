@@ -66,7 +66,15 @@ const TopTabNav = props => {
         array.push(item);
       });
     }
-    await AsyncStorage.setItem('apply-leave', JSON.stringify(array));
+    let sortedDates;
+    if (array) {
+      sortedDates = array.sort(
+        (a, b) => new Date(a.fromDate) - new Date(b.fromDate),
+      );
+    }
+    console.log('sortedDates------->', sortedDates);
+
+    await AsyncStorage.setItem('apply-leave', JSON.stringify(sortedDates));
     setCommObj(prev => ({
       ...prev,
       reason: '',
@@ -139,13 +147,19 @@ const TopTabNav = props => {
         });
       }
       if (arr) {
-        let sortedDates = arr.sort((a, b) => new Date(a) - new Date(b));
-        console.log('sortedDates------>', sortedDates[0]);
         setCommObj(prev => ({
           ...prev,
-          maxDate: sortedDates[0],
+          maxDate: arr[0],
         }));
       }
+      // if (arr) {
+      //   let sortedDates = arr.sort((a, b) => new Date(a) - new Date(b));
+      //   console.log('sortedDates------>', sortedDates[0]);
+      //   setCommObj(prev => ({
+      //     ...prev,
+      //     maxDate: sortedDates[0],
+      //   }));
+      // }
 
       // let closestDate = null;
 
